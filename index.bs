@@ -95,7 +95,7 @@ definition</a> in that Mozilla defines other parties as first parties if the
 user can easily discover which party it is and intends to interact with that
 party, for example to allow sign-in widgets to be first-party.
 
-A <dfn noexport>third party</dfn> for a user action is any party that isn't the [=first
+A <dfn>third party</dfn> for a user action is any party that isn't the [=first
 party=] or the user (the second party).
 
 A <dfn>user</dfn> is a human or program that controls a user agent.
@@ -113,7 +113,7 @@ identifiers=].
 
 An <dfn>attacker</dfn> is any entity trying to get information that a [=user=]
 might not want them to get. Attackers are often entities that a user intends to
-interact with in other ways, as both first and third parties, and some users may
+interact with in other ways, as both [=first party|first=] and [=third parties=], and some users may
 not mind their collection of this information.
 
 This document uses the terms <dfn>publisher</dfn> and <dfn>tracker</dfn>
