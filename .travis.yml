@@ -1,0 +1,33 @@
+language: python
+addons:
+  apt:
+    packages:
+    - python-pip
+
+install:
+- git clone --depth=1 https://github.com/tabatkins/bikeshed.git
+- pip install --editable bikeshed
+- bikeshed update
+
+script:
+- mkdir -p out
+- bikeshed --die-on=warning spec index.bs out/index.html
+
+branches:
+  only:
+  - master
+
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_8069144b1523_key -iv $encrypted_8069144b1523_iv -in deploy_key.enc -out deploy_key -d
+
+deploy:
+  provider: pages:git
+  local_dir: out
+  deploy_key: deploy_key
+  edge:
+    branch: master
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
