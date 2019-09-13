@@ -1214,7 +1214,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version cb5a17652cb33dffd20b8b6a876bb811c1f749a9" name="generator">
   <link href="http://jyasskin.github.io/privacy-threat-model" rel="canonical">
-  <meta content="288a4dcc8fb17f4345d8af9d4445477b746d4a25" name="document-revision">
+  <meta content="5c66e1ea4f2b3ad6fa7e9457df148436e703c23c" name="document-revision">
 <style>
 .threatmodel tr.goals th {
   padding: 1ex;
@@ -1542,7 +1542,7 @@ This differs from <a href="https://wiki.mozilla.org/Security/Anti_tracking_polic
 definition</a> in that Mozilla defines other parties as first parties if the
 user can easily discover which party it is and intends to interact with that
 party, for example to allow sign-in widgets to be first-party.</p>
-   <p>A <dfn data-dfn-type="dfn" data-noexport id="third-party">third party<a class="self-link" href="#third-party"></a></dfn> for a user action is any party that isn’t the <a data-link-type="dfn" href="#first-party" id="ref-for-first-party">first
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="third-party">third party</dfn> for a user action is any party that isn’t the <a data-link-type="dfn" href="#first-party" id="ref-for-first-party">first
 party</a> or the user (the second party).</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="user">user</dfn> is a human or program that controls a user agent.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="user-id">user ID</dfn> is a pair of a <a data-link-type="dfn" href="#site" id="ref-for-site">site</a> and a (potentially-large) integer
@@ -1554,7 +1554,7 @@ global identifiers and can usually list and recognize them. A goal of
 anti-tracking policy is to prevent <a data-link-type="dfn" href="#user-id" id="ref-for-user-id">user IDs</a> from becoming <a data-link-type="dfn" href="#global-identifier" id="ref-for-global-identifier">global
 identifiers</a>.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="attacker">attacker</dfn> is any entity trying to get information that a <a data-link-type="dfn" href="#user" id="ref-for-user②">user</a> might not want them to get. Attackers are often entities that a user intends to
-interact with in other ways, as both first and third parties, and some users may
+interact with in other ways, as both <a data-link-type="dfn" href="#first-party" id="ref-for-first-party①">first</a> and <a data-link-type="dfn" href="#third-party" id="ref-for-third-party">third parties</a>, and some users may
 not mind their collection of this information.</p>
    <p>This document uses the terms <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="publisher">publisher</dfn> and <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="tracker">tracker</dfn> colloquially to refer to particular kinds of <a data-link-type="dfn" href="#site" id="ref-for-site①">sites</a> and the <a data-link-type="dfn" href="#party" id="ref-for-party①">parties</a> that
 operate them. They are not rigorously defined.</p>
@@ -1962,7 +1962,13 @@ remove, differently from goals attackers already can’t achieve?<a href="#issue
   <aside class="dfn-panel" data-for="first-party">
    <b><a href="#first-party">#first-party</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-first-party">2. Terminology</a>
+    <li><a href="#ref-for-first-party">2. Terminology</a> <a href="#ref-for-first-party①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="third-party">
+   <b><a href="#third-party">#third-party</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-third-party">2. Terminology</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user">
