@@ -1,0 +1,17 @@
+# Essential Web APIs # {#essential}
+
+These are Web APIs and features that would destroy the Web as we know it if they
+went away. The placement of some features here will be contentious, and those
+features are marked as I discover the contention.
+
+## Javascript can make requests to servers ## {#ess-js-requests}
+
+This could perhaps be broken down into same-origin requests and cross-origin
+requests, with cross-origin requests being more contentious.
+
+## Servers can define the paths under which they host content ## {#ess-server-defined-paths}
+
+These paths can include opaque strings that neither a human nor a user agent can
+interpret without knowing how the server works, like
+`/t/proposal-packaging-for-the-web-signed-and-indexed/1827/10` and
+`/Moby-Dick-Herman-Melville/dp/1503280780/`.

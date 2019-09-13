@@ -1,0 +1,156 @@
+<pre class='metadata'>
+Title: Target Privacy Threat Model
+Shortname: privacy-threat-model
+Level: none
+Status: DREAM
+Repository: jyasskin/privacy-threat-model
+URL: http://jyasskin.github.io/privacy-threat-model
+Editor: Jeffrey Yasskin, Google Inc. https://google.com/, jyasskin@google.com, w3cid 72192
+Abstract: A privacy threat model we should migrate the web toward.
+
+Warning: Not Ready
+Markup Shorthands: markdown on
+Complain About: accidental-2119 on, missing-example-ids on
+Assume Explicit For: on
+</pre>
+<pre class='biblio'>
+{
+  "PSL-PROBLEMS": {
+    "authors": [
+      "Ryan Sleevi"
+    ],
+    "href": "https://github.com/sleevi/psl-problems",
+    "title": "Public Suffix List Problems"
+  }
+}
+</pre>
+<pre class="anchors">
+spec: RFC6265; urlPrefix: https://tools.ietf.org/html/rfc6265#
+    type: http-header
+        text: HttpOnly; url: section-4.1.2.6
+spec: PSL; urlPrefix: https://publicsuffix.org/
+    type: dfn
+        text: registrable domain; url: list/#list-format
+</pre>
+<pre class='link-defaults'>
+</pre>
+<style>
+.threatmodel tr.goals th {
+  padding: 1ex;
+  max-height: 20em;
+}
+.threatmodel tr.goals th * {
+  writing-mode: vertical-rl;
+}
+.threatmodel td {
+  text-align: center;
+}
+</style>
+
+Advisement: This document is at a very early stage. Many things in it are wrong
+and/or incomplete. Please take it as a rough shape for how we might document the
+target threat model, rather than as definite statements about what should be in
+the target threat model.
+
+# Introduction # {#intro}
+
+As a **threat model**, this specification describes attacker capabilities and
+attacker goals, and says which goals which capabilities should and should not
+enable.
+
+As a **privacy** threat model, the attacker goals compromise the privacy of
+users, rather than their security.
+
+As a **target** threat model, it describes not the current state of the Web
+including all current maybe-unwise APIs, but rather an end state that we hope to
+migrate to, and that new APIs should be held to. This is meant to be a
+*plausible* threat model: it doesn't expect to remove any APIs or browser
+behavior that is deemed essential to the viability of the Web.
+
+Since people are likely to disagree about which APIs are essential to the Web,
+when saying that an attacker can achieve their goal, this document describes how
+the attacker achieves it using particular "essential" APIs, and it provides an
+index of those APIs so readers can point out ones that they don't consider
+essential.
+
+# Terminology # {#terminology}
+
+[[HTML]] defines an [=origin=] as the tuple of a scheme, hostname, and port that
+provides the main security boundary on the web.
+
+A <dfn>site</dfn> is the set of [=origins=] whose hostnames share a common
+[=registrable domain=]. Note that there are problems ([[PSL-PROBLEMS]]) with
+using [=registrable domains=] as a logical boundary.
+
+A <dfn>party</dfn> is defined by [[tracking-dnt]] as "a natural person, a legal
+entity, or a set of legal entities that share common owner(s), common
+controller(s), and a group identity that is easily discoverable by a user."
+
+The <dfn>first party</dfn> for a user action is the [=party=] that controls the
+[=origin=] of the [=top-level browsing context=] under which the action
+happened. Intuitively, this is the owner of the domain in the browser's URL bar.
+This differs from <a
+href="https://wiki.mozilla.org/Security/Anti_tracking_policy#Tracking_Definition">Mozilla's
+definition</a> in that Mozilla defines other parties as first parties if the
+user can easily discover which party it is and intends to interact with that
+party, for example to allow sign-in widgets to be first-party.
+
+A <dfn noexport>third party</dfn> for a user action is any party that isn't the [=first
+party=] or the user (the second party).
+
+A <dfn>user</dfn> is a human or program that controls a user agent.
+
+A <dfn>user ID</dfn> is a pair of a [=site=] and a (potentially-large) integer
+allocated by that site that is used to identify a [=user=] on that site. A
+single user will generally have many user IDs that refer to them, and a single
+site may or may not know that multiple user IDs refer to the same user.
+
+A <dfn>global identifier</dfn> is a string that identifies a particular [=user=]
+independent of which site they're visiting. Users generally have relatively few
+global identifiers and can usually list and recognize them. A goal of
+anti-tracking policy is to prevent [=user IDs=] from becoming [=global
+identifiers=].
+
+An <dfn>attacker</dfn> is any entity trying to get information that a [=user=]
+might not want them to get. Attackers are often entities that a user intends to
+interact with in other ways, as both first and third parties, and some users may
+not mind their collection of this information.
+
+This document uses the terms <dfn>publisher</dfn> and <dfn>tracker</dfn>
+colloquially to refer to particular kinds of [=sites=] and the [=parties=] that
+operate them. They are not rigorously defined.
+
+<pre class="include">
+path: model.bsinc
+</pre>
+
+<pre class="include">
+path: capabilities.bsinc
+</pre>
+
+<pre class="include">
+path: goals.bsinc
+</pre>
+
+<pre class="include">
+path: essential.bsinc
+</pre>
+
+# Acknowledgements # {#acknowledgements}
+
+As far as I know, Safari did the first work to prove that a more
+privacy-preserving web was possible, by blocking third-party cookies by default
+and then shipping [ITP
+1.0](https://webkit.org/blog/7675/intelligent-tracking-prevention/), without
+breaking the world. They eventually published their [policy for Tracking
+Prevention](https://webkit.org/tracking-prevention-policy/),
+which heavily influenced this document.
+
+I believe Mozilla wrote the first concrete [anti-tracking
+policy](https://wiki.mozilla.org/Security/Anti_tracking_policy), which inspired
+Safari's policy.
+
+Michael Kleber on the Chrome team proposed a [Privacy Model for the
+Web](https://github.com/michaelkleber/privacy-model), which suggests blocking
+the transfer of [=user IDs=] between top-level sites and suggests a few ways
+that information could flow between sites without compromising user privacy.

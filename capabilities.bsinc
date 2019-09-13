@@ -1,0 +1,29 @@
+# Attacker Capabilities # {#capabilities}
+
+These are things some attackers can do. The attackers can use them to achieve
+their <a href="#goals">goals</a>. All attackers are assumed to be able to buy
+domains and host sites on their domains.
+
+## Load iframes ## {#cap-iframes}
+
+The attacker can convince a publisher to load an iframe from the attacker's site.
+
+## Run Javascript in a first-party context ## {#cap-first-party-js}
+
+When a publisher wants to show ads from an ad network, many/most ad networks
+require that publisher to use a `<script src="adnetwork.js">` tag instead of an
+`<iframe src="adnetwork.html">`, which allows the ad network to see any
+publisher data that's exposed to Javascript. This includes query parameters
+(e.g. `fbclid`) and any cookies that aren't <a http-header>HttpOnly</a>.
+
+## Modify server processing ## {#cap-run-on-server}
+
+Some attackers can convince some publishers (perhaps by paying them) to modify
+their server software. This could be used, for example, to receive [=user IDs=]
+passed in a path segment instead of a query parameter, without breaking the
+normal logic mapping a path to content.
+
+## Read server logs ## {#cap-read-logs}
+
+Servers can keep logs of requests. The attacker may be able to convince some
+server operators to give them these logs or let them run queries over the logs.

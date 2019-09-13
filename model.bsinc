@@ -1,0 +1,118 @@
+# Threat Model # {#model}
+
+This table summarizes which capabilities should allow attackers to achieve which
+goals and, conversely, which goals should be frustrated for attackers even when
+they have certain capabilities.
+
+<span style="color:green">✘</span> indicates that the goal should be frustrated,
+while <span style="color:red">✓</span> indicates that the attacker can achieve
+their goal.
+
+Issue: Should we mark goals attackers can currently achieve, which we want to
+remove, differently from goals attackers already can't achieve?
+
+## Anti-tracking ## {#model-anti-tracking}
+
+<table class="threatmodel">
+<tr class="goals">
+  <td></td>
+  <th>[[#goal-transfer-userid]]</th>
+  <th>[[#goal-userid-tracker-to-self-in-pub]]</th>
+  <th>[[#goal-userid-tracker-in-pub1-to-self-in-pub2]]</th>
+  <th>[[#goal-prob-transfer-userid-no-nav]]</th>
+  <th>[[#goal-prob-transfer-userid]]</th>
+</tr>
+<tr>
+  <th>[[#cap-iframes]]</th>
+  <td data-goal="transfer-userid" style="color:green">✘</td>
+  <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘</td>
+  <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘</td>
+  <td data-goal="prob-transfer-userid-no-nav" style="color:green">✘</td>
+  <td data-goal="prob-transfer-userid" style="color:green">✘</td>
+</tr>
+<tr>
+  <th>[[#cap-first-party-js]]</th>
+  <td data-goal="transfer-userid" style="color:green">✘</td>
+  <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘</td>
+  <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘</td>
+  <td data-goal="prob-transfer-userid-no-nav" style="color:green">✘</td>
+  <td data-goal="prob-transfer-userid" style="color:green">✘</td>
+</tr>
+<tr>
+  <th>[[#cap-read-logs]] on other publishers</th>
+  <td data-goal="transfer-userid" style="color:green">✘</td>
+  <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘</td>
+  <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘</td>
+  <td data-goal="prob-transfer-userid-no-nav" style="color:green">✘</td>
+  <td data-goal="prob-transfer-userid">
+  <details>
+    <summary style="color:red">✓</summary>
+    Publisher 2 reads their own logs for the page load and publisher 1's logs for the click tracking of the navigation click. [=User IDs=] that clicked on publisher 1 approximately the same
+    time as that link's target loaded on publisher 2 are
+    probabilistically correlated.
+  </details>
+  </td>
+</tr>
+<tr>
+  <th>[[#cap-run-on-server]] on the target publisher</th>
+  <td data-goal="transfer-userid">
+    <span style="color:green">✘</span>
+  </td>
+  <td data-goal="userid-tracker-to-self-in-pub">
+    <details>
+    <summary style="color:red">✓</summary>
+    The tracker adds a path segment, possibly encrypted, in their links to the
+    publisher, encoding the user's ID within the tracker. They convince the
+    publisher to <a href="#ess-server-defined-paths">ignore that path segment in
+    their server processing</a>. The tracker running inside that publisher reads
+    the URL, decodes the tracker site's user ID, and <a
+    href="#ess-js-requests">sends that and the tracker-within-publisher user ID
+    up to the tracker's server</a>.
+  </details>
+  </td>
+  <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" >
+    <span style="color:green">✘</span>
+  </td>
+  <td data-goal="prob-transfer-userid-no-nav" >
+    <span style="color:green">✘</span>
+  </td>
+  <td data-goal="prob-transfer-userid">
+    <span style="color:green">✘</span>
+  </td>
+</tr>
+<tr>TODO
+  <th>[[#cap-first-party-js]] or [[#cap-run-on-server]] on the source site and [[#cap-run-on-server]] on the target publisher</th>
+  <td data-goal="transfer-userid">
+    <span style="color:green">✘</span>
+  </td>
+  <td data-goal="userid-tracker-to-self-in-pub" >
+    <details>
+      <summary style="color:red">✓</summary>
+      The tracker adds a path segment, possibly encrypted, in their links to the
+      publisher, encoding the user's ID within the tracker. They convince the
+      publisher to <a href="#ess-server-defined-paths">ignore that path segment in
+      their server processing</a>. The tracker running inside that publisher reads
+      the URL, decodes the tracker site's user ID, and <a
+      href="#ess-js-requests">sends that and the tracker-within-publisher user ID
+      up to the tracker's server</a>.
+    </details>
+  </td>
+  <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" >
+    <details>
+      <summary style="color:red">✓</summary>
+      The tracker adds a path segment, possibly encrypted, in the publisher 1's
+      links to publisher 2, encoding the user's ID within publisher 1. They
+      convince publisher 2 to <a href="#ess-server-defined-paths">ignore that
+      path segment in their server processing</a>. The tracker running inside
+      that publisher reads the URL, decodes publisher 1's user ID, and <a
+      href="#ess-js-requests">sends that and publisher 2's user ID up to the
+      tracker's server</a>.
+    </details>
+  </td>
+  <td data-goal="prob-transfer-userid-no-nav" >
+    <span style="color:red">✓</span>
+  </td>
+  <td data-goal="prob-transfer-userid">
+    <span style="color:red">✓</span>
+  </td>
+</tr></table>
