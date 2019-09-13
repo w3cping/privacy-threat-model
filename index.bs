@@ -45,6 +45,12 @@ spec: PSL; urlPrefix: https://publicsuffix.org/
 .threatmodel td {
   text-align: center;
 }
+details[open] {
+  position: absolute;
+  background: white;
+  border: thin black solid;
+  text-align: left;
+}
 </style>
 
 Advisement: This document is at a very early stage. Many things in it are wrong
