@@ -126,6 +126,79 @@ This document uses the terms <dfn>publisher</dfn> and <dfn>tracker</dfn>
 colloquially to refer to particular kinds of [=sites=] and the [=parties=] that
 operate them. They are not rigorously defined.
 
+# High-level threats # {#high-level-threats}
+
+User agents should attempt to defend their users from a variety of high-level threats or attacker goals, described in this section. [[#goals]] then describes the low-level steps an attacker would use to achieve these high-level goals.
+
+Issue: This section is not complete. It lists a lot of potential privacy
+threats, but needs editing to pick which kinds of threats belong in this threat
+model and to unify the multiple lists of suggestions.
+
+The following threats were brainstormed in the 2019 TPAC PING meeting:
+
+*  Unexpected Recognition (being confident that this is the same person/device
+    you saw before), cross-site. This threat is discussed in
+    [[#model-anti-tracking]].
+* Recognition, same-site
+* Benign information disclosure (connected hardware [game controller or
+    assistive device], system preferences [like dark mode]…)
+* Sensitive information disclosure (user location, user camera, file
+    information, financial data, contacts, calendar…)
+* Intrusion (displaying messages/notifications, playing sounds, full screen…)
+* Obtaining capabilities (sending SMS, finance/billing…)
+
+The following threats are copied from
+[[security-privacy-questionnaire#threats]]. They are not all addressed in this
+document.
+
+: Surveillance
+
+:: Surveillance is the observation or monitoring of an individual’s
+    communications or activities.
+
+: Stored Data Compromise
+
+:: End systems that do not take adequate measures to secure stored data from
+    unauthorized or inappropriate access.
+
+: Intrusion
+
+:: Intrusion consists of invasive acts that disturb or interrupt one’s life or
+    activities.
+
+: Misattribution
+
+::: Misattribution occurs when data or communications related to one individual
+    are attributed to another.
+
+: Correlation
+
+:: Correlation is the combination of various pieces of information related to an
+    individual or that obtain that characteristic when combined.
+
+: Identification
+
+:: Identification is the linking of information to a particular individual to
+    infer an individual’s identity or to allow the inference of an individual’s
+    identity.
+
+: Secondary Use
+
+:: Secondary use is the use of collected information about an individual without
+    the individual’s consent for a purpose different from that for which the
+    information was collected.
+
+: Disclosure
+
+:: Disclosure is the revelation of information about an individual that affects
+    the way others judge the individual.
+
+: Exclusion
+
+:: Exclusion is the failure to allow individuals to know about the data that
+    others have about them and to participate in its handling and use.
+
+
 <pre class="include">
 path: model.bsinc
 </pre>
