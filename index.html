@@ -1214,7 +1214,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version cb5a17652cb33dffd20b8b6a876bb811c1f749a9" name="generator">
   <link href="http://jyasskin.github.io/privacy-threat-model" rel="canonical">
-  <meta content="9040e0d197d3b3e390c9c986c1f3df619bd61256" name="document-revision">
+  <meta content="e1070694fceca9c2682dc01148c787cce353bdb3" name="document-revision">
 <style>
 .threatmodel tr.goals th {
   padding: 1ex;
@@ -1421,7 +1421,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Target Privacy Threat Model</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-09-13">13 September 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-09-17">17 September 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1444,7 +1444,7 @@ pre .property::before, pre .property::after {
    </div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 13 September 2019,
+In addition, as of 17 September 2019,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1460,44 +1460,45 @@ Parts of this work may be from another specification document.  If so, those par
    <ol class="toc" role="directory">
     <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
     <li><a href="#terminology"><span class="secno">2</span> <span class="content">Terminology</span></a>
+    <li><a href="#high-level-threats"><span class="secno">3</span> <span class="content">High-level threats</span></a>
     <li>
-     <a href="#model"><span class="secno">3</span> <span class="content">Threat Model</span></a>
+     <a href="#model"><span class="secno">4</span> <span class="content">Threat Model</span></a>
      <ol class="toc">
-      <li><a href="#model-anti-tracking"><span class="secno">3.1</span> <span class="content">Anti-tracking</span></a>
+      <li><a href="#model-anti-tracking"><span class="secno">4.1</span> <span class="content">Anti-tracking</span></a>
      </ol>
     <li>
-     <a href="#capabilities"><span class="secno">4</span> <span class="content">Attacker Capabilities</span></a>
+     <a href="#capabilities"><span class="secno">5</span> <span class="content">Attacker Capabilities</span></a>
      <ol class="toc">
-      <li><a href="#cap-iframes"><span class="secno">4.1</span> <span class="content">Load iframes</span></a>
-      <li><a href="#cap-first-party-js"><span class="secno">4.2</span> <span class="content">Run Javascript in a first-party context</span></a>
-      <li><a href="#cap-run-on-server"><span class="secno">4.3</span> <span class="content">Modify server processing</span></a>
-      <li><a href="#cap-read-logs"><span class="secno">4.4</span> <span class="content">Read server logs</span></a>
+      <li><a href="#cap-iframes"><span class="secno">5.1</span> <span class="content">Load iframes</span></a>
+      <li><a href="#cap-first-party-js"><span class="secno">5.2</span> <span class="content">Run Javascript in a first-party context</span></a>
+      <li><a href="#cap-run-on-server"><span class="secno">5.3</span> <span class="content">Modify server processing</span></a>
+      <li><a href="#cap-read-logs"><span class="secno">5.4</span> <span class="content">Read server logs</span></a>
      </ol>
     <li>
-     <a href="#goals"><span class="secno">5</span> <span class="content">Attacker goals</span></a>
+     <a href="#goals"><span class="secno">6</span> <span class="content">Attacker goals</span></a>
      <ol class="toc">
       <li>
-       <a href="#goals-metrics"><span class="secno">5.1</span> <span class="content">User metrics within a single site</span></a>
+       <a href="#goals-metrics"><span class="secno">6.1</span> <span class="content">User metrics within a single site</span></a>
        <ol class="toc">
-        <li><a href="#goal-click-tracking"><span class="secno">5.1.1</span> <span class="content">Click tracking</span></a>
+        <li><a href="#goal-click-tracking"><span class="secno">6.1.1</span> <span class="content">Click tracking</span></a>
        </ol>
       <li>
-       <a href="#goals-tracking"><span class="secno">5.2</span> <span class="content">Tracking</span></a>
+       <a href="#goals-tracking"><span class="secno">6.2</span> <span class="content">Tracking</span></a>
        <ol class="toc">
-        <li><a href="#goal-transfer-userid"><span class="secno">5.2.1</span> <span class="content">Transfer user ID from publisher 1 to publisher 2 on navigation.</span></a>
-        <li><a href="#goal-userid-tracker-to-self-in-pub"><span class="secno">5.2.2</span> <span class="content">Transfer user ID from tracker to that tracker running within a publisher, on navigation.</span></a>
-        <li><a href="#goal-userid-tracker-in-pub1-to-self-in-pub2"><span class="secno">5.2.3</span> <span class="content">Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</span></a>
-        <li><a href="#goal-prob-transfer-userid"><span class="secno">5.2.4</span> <span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</span></a>
-        <li><a href="#goal-prob-transfer-userid-no-nav"><span class="secno">5.2.5</span> <span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</span></a>
+        <li><a href="#goal-transfer-userid"><span class="secno">6.2.1</span> <span class="content">Transfer user ID from publisher 1 to publisher 2 on navigation.</span></a>
+        <li><a href="#goal-userid-tracker-to-self-in-pub"><span class="secno">6.2.2</span> <span class="content">Transfer user ID from tracker to that tracker running within a publisher, on navigation.</span></a>
+        <li><a href="#goal-userid-tracker-in-pub1-to-self-in-pub2"><span class="secno">6.2.3</span> <span class="content">Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</span></a>
+        <li><a href="#goal-prob-transfer-userid"><span class="secno">6.2.4</span> <span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</span></a>
+        <li><a href="#goal-prob-transfer-userid-no-nav"><span class="secno">6.2.5</span> <span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#essential"><span class="secno">6</span> <span class="content">Essential Web APIs</span></a>
+     <a href="#essential"><span class="secno">7</span> <span class="content">Essential Web APIs</span></a>
      <ol class="toc">
-      <li><a href="#ess-js-requests"><span class="secno">6.1</span> <span class="content">Javascript can make requests to servers</span></a>
-      <li><a href="#ess-server-defined-paths"><span class="secno">6.2</span> <span class="content">Servers can define the paths under which they host content</span></a>
+      <li><a href="#ess-js-requests"><span class="secno">7.1</span> <span class="content">Javascript can make requests to servers</span></a>
+      <li><a href="#ess-server-defined-paths"><span class="secno">7.2</span> <span class="content">Servers can define the paths under which they host content</span></a>
      </ol>
-    <li><a href="#acknowledgements"><span class="secno">7</span> <span class="content">Acknowledgements</span></a>
+    <li><a href="#acknowledgements"><span class="secno">8</span> <span class="content">Acknowledgements</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -1564,7 +1565,73 @@ interact with in other ways, as both <a data-link-type="dfn" href="#first-party"
 not mind their collection of this information.</p>
    <p>This document uses the terms <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="publisher">publisher</dfn> and <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="tracker">tracker</dfn> colloquially to refer to particular kinds of <a data-link-type="dfn" href="#site" id="ref-for-site①">sites</a> and the <a data-link-type="dfn" href="#party" id="ref-for-party①">parties</a> that
 operate them. They are not rigorously defined.</p>
-   <h2 class="heading settled" data-level="3" id="model"><span class="secno">3. </span><span class="content">Threat Model</span><a class="self-link" href="#model"></a></h2>
+   <h2 class="heading settled" data-level="3" id="high-level-threats"><span class="secno">3. </span><span class="content">High-level threats</span><a class="self-link" href="#high-level-threats"></a></h2>
+   <p>User agents should attempt to defend their users from a variety of high-level threats or attacker goals, described in this section. <a href="#goals">§ 6 Attacker goals</a> then describes the low-level steps an attacker would use to achieve these high-level goals.</p>
+   <p class="issue" id="issue-05a52c93"><a class="self-link" href="#issue-05a52c93"></a> This section is not complete. It lists a lot of potential privacy
+threats, but needs editing to pick which kinds of threats belong in this threat
+model and to unify the multiple lists of suggestions.</p>
+   <p>The following threats were brainstormed in the 2019 TPAC PING meeting:</p>
+   <ul>
+    <li data-md>
+     <p>Unexpected Recognition (being confident that this is the same person/device
+you saw before), cross-site. This threat is discussed in <a href="#model-anti-tracking">§ 4.1 Anti-tracking</a>.</p>
+    <li data-md>
+     <p>Recognition, same-site</p>
+    <li data-md>
+     <p>Benign information disclosure (connected hardware [game controller or
+assistive device], system preferences [like dark mode]…)</p>
+    <li data-md>
+     <p>Sensitive information disclosure (user location, user camera, file
+information, financial data, contacts, calendar…)</p>
+    <li data-md>
+     <p>Intrusion (displaying messages/notifications, playing sounds, full screen…)</p>
+    <li data-md>
+     <p>Obtaining capabilities (sending SMS, finance/billing…)</p>
+   </ul>
+   <p>The following threats are copied from <a href="https://www.w3.org/TR/security-privacy-questionnaire/#threats">Self-Review Questionnaire: Security and Privacy §threats</a>. They are not all addressed in this
+document.</p>
+   <dl>
+    <dt data-md>Surveillance
+    <dd data-md>
+     <p>Surveillance is the observation or monitoring of an individual’s
+communications or activities.</p>
+    <dt data-md>Stored Data Compromise
+    <dd data-md>
+     <p>End systems that do not take adequate measures to secure stored data from
+unauthorized or inappropriate access.</p>
+    <dt data-md>Intrusion
+    <dd data-md>
+     <p>Intrusion consists of invasive acts that disturb or interrupt one’s life or
+activities.</p>
+    <dt data-md>Misattribution
+   </dl>
+   <p>::: Misattribution occurs when data or communications related to one individual
+    are attributed to another.</p>
+   <dl>
+    <dt data-md>Correlation
+    <dd data-md>
+     <p>Correlation is the combination of various pieces of information related to an
+individual or that obtain that characteristic when combined.</p>
+    <dt data-md>Identification
+    <dd data-md>
+     <p>Identification is the linking of information to a particular individual to
+infer an individual’s identity or to allow the inference of an individual’s
+identity.</p>
+    <dt data-md>Secondary Use
+    <dd data-md>
+     <p>Secondary use is the use of collected information about an individual without
+the individual’s consent for a purpose different from that for which the
+information was collected.</p>
+    <dt data-md>Disclosure
+    <dd data-md>
+     <p>Disclosure is the revelation of information about an individual that affects
+the way others judge the individual.</p>
+    <dt data-md>Exclusion
+    <dd data-md>
+     <p>Exclusion is the failure to allow individuals to know about the data that
+others have about them and to participate in its handling and use.</p>
+   </dl>
+   <h2 class="heading settled" data-level="4" id="model"><span class="secno">4. </span><span class="content">Threat Model</span><a class="self-link" href="#model"></a></h2>
    <p>This table summarizes which capabilities should allow attackers to achieve which
 goals and, conversely, which goals should be frustrated for attackers even when
 they have certain capabilities.</p>
@@ -1573,33 +1640,33 @@ while <span style="color:red">✓</span> indicates that the attacker can achieve
 their goal.</p>
    <p class="issue" id="issue-eb037c92"><a class="self-link" href="#issue-eb037c92"></a> Should we mark goals attackers can currently achieve, which we want to
 remove, differently from goals attackers already can’t achieve?</p>
-   <h3 class="heading settled" data-level="3.1" id="model-anti-tracking"><span class="secno">3.1. </span><span class="content">Anti-tracking</span><a class="self-link" href="#model-anti-tracking"></a></h3>
+   <h3 class="heading settled" data-level="4.1" id="model-anti-tracking"><span class="secno">4.1. </span><span class="content">Anti-tracking</span><a class="self-link" href="#model-anti-tracking"></a></h3>
     TODO 
    <table class="threatmodel">
     <tbody>
      <tr class="goals">
       <td>
-      <th><a href="#goal-transfer-userid">§ 5.2.1 Transfer user ID from publisher 1 to publisher 2 on navigation.</a>
-      <th><a href="#goal-userid-tracker-to-self-in-pub">§ 5.2.2 Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a>
-      <th><a href="#goal-userid-tracker-in-pub1-to-self-in-pub2">§ 5.2.3 Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a>
-      <th><a href="#goal-prob-transfer-userid-no-nav">§ 5.2.5 Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a>
-      <th><a href="#goal-prob-transfer-userid">§ 5.2.4 Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a>
+      <th><a href="#goal-transfer-userid">§ 6.2.1 Transfer user ID from publisher 1 to publisher 2 on navigation.</a>
+      <th><a href="#goal-userid-tracker-to-self-in-pub">§ 6.2.2 Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a>
+      <th><a href="#goal-userid-tracker-in-pub1-to-self-in-pub2">§ 6.2.3 Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a>
+      <th><a href="#goal-prob-transfer-userid-no-nav">§ 6.2.5 Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a>
+      <th><a href="#goal-prob-transfer-userid">§ 6.2.4 Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a>
      <tr>
-      <th><a href="#cap-iframes">§ 4.1 Load iframes</a>
+      <th><a href="#cap-iframes">§ 5.1 Load iframes</a>
       <td data-goal="transfer-userid" style="color:green">✘
       <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘
       <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘
       <td data-goal="prob-transfer-userid-no-nav" style="color:green">✘
       <td data-goal="prob-transfer-userid" style="color:green">✘
      <tr>
-      <th><a href="#cap-first-party-js">§ 4.2 Run Javascript in a first-party context</a>
+      <th><a href="#cap-first-party-js">§ 5.2 Run Javascript in a first-party context</a>
       <td data-goal="transfer-userid" style="color:green">✘
       <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘
       <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘
       <td data-goal="prob-transfer-userid-no-nav" style="color:green">✘
       <td data-goal="prob-transfer-userid" style="color:green">✘
      <tr>
-      <th><a href="#cap-read-logs">§ 4.4 Read server logs</a> on other publishers
+      <th><a href="#cap-read-logs">§ 5.4 Read server logs</a> on other publishers
       <td data-goal="transfer-userid" style="color:green">✘
       <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘
       <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘
@@ -1612,7 +1679,7 @@ remove, differently from goals attackers already can’t achieve?</p>
     probabilistically correlated. 
        </details>
      <tr>
-      <th><a href="#cap-run-on-server">§ 4.3 Modify server processing</a> on the target publisher
+      <th><a href="#cap-run-on-server">§ 5.3 Modify server processing</a> on the target publisher
       <td data-goal="transfer-userid"> <span style="color:green">✘</span> 
       <td data-goal="userid-tracker-to-self-in-pub">
        <details>
@@ -1628,7 +1695,7 @@ remove, differently from goals attackers already can’t achieve?</p>
       <td data-goal="prob-transfer-userid-no-nav"> <span style="color:green">✘</span> 
       <td data-goal="prob-transfer-userid"> <span style="color:green">✘</span> 
      <tr>
-      <th><a href="#cap-first-party-js">§ 4.2 Run Javascript in a first-party context</a> or <a href="#cap-run-on-server">§ 4.3 Modify server processing</a> on the source site and <a href="#cap-run-on-server">§ 4.3 Modify server processing</a> on the target publisher
+      <th><a href="#cap-first-party-js">§ 5.2 Run Javascript in a first-party context</a> or <a href="#cap-run-on-server">§ 5.3 Modify server processing</a> on the source site and <a href="#cap-run-on-server">§ 5.3 Modify server processing</a> on the target publisher
       <td data-goal="transfer-userid"> <span style="color:green">✘</span> 
       <td data-goal="userid-tracker-to-self-in-pub">
        <details>
@@ -1653,64 +1720,64 @@ remove, differently from goals attackers already can’t achieve?</p>
       <td data-goal="prob-transfer-userid-no-nav"> <span style="color:red">✓</span> 
       <td data-goal="prob-transfer-userid"> <span style="color:red">✓</span> 
    </table>
-   <h2 class="heading settled" data-level="4" id="capabilities"><span class="secno">4. </span><span class="content">Attacker Capabilities</span><a class="self-link" href="#capabilities"></a></h2>
+   <h2 class="heading settled" data-level="5" id="capabilities"><span class="secno">5. </span><span class="content">Attacker Capabilities</span><a class="self-link" href="#capabilities"></a></h2>
    <p>These are things some attackers can do. The attackers can use them to achieve
 their <a href="#goals">goals</a>. All attackers are assumed to be able to buy
 domains and host sites on their domains.</p>
-   <h3 class="heading settled" data-level="4.1" id="cap-iframes"><span class="secno">4.1. </span><span class="content">Load iframes</span><a class="self-link" href="#cap-iframes"></a></h3>
+   <h3 class="heading settled" data-level="5.1" id="cap-iframes"><span class="secno">5.1. </span><span class="content">Load iframes</span><a class="self-link" href="#cap-iframes"></a></h3>
    <p>The attacker can convince a publisher to load an iframe from the attacker’s site.</p>
-   <h3 class="heading settled" data-level="4.2" id="cap-first-party-js"><span class="secno">4.2. </span><span class="content">Run Javascript in a first-party context</span><a class="self-link" href="#cap-first-party-js"></a></h3>
+   <h3 class="heading settled" data-level="5.2" id="cap-first-party-js"><span class="secno">5.2. </span><span class="content">Run Javascript in a first-party context</span><a class="self-link" href="#cap-first-party-js"></a></h3>
    <p>When a publisher wants to show ads from an ad network, many/most ad networks
 require that publisher to use a <code>&lt;script src="adnetwork.js"></code> tag instead of an <code>&lt;iframe src="adnetwork.html"></code>, which allows the ad network to see any
 publisher data that’s exposed to Javascript. This includes query parameters
 (e.g. <code>fbclid</code>) and any cookies that aren’t <a data-link-type="http-header" href="https://tools.ietf.org/html/rfc6265#section-4.1.2.6" id="ref-for-section-4.1.2.6">HttpOnly</a>.</p>
-   <h3 class="heading settled" data-level="4.3" id="cap-run-on-server"><span class="secno">4.3. </span><span class="content">Modify server processing</span><a class="self-link" href="#cap-run-on-server"></a></h3>
+   <h3 class="heading settled" data-level="5.3" id="cap-run-on-server"><span class="secno">5.3. </span><span class="content">Modify server processing</span><a class="self-link" href="#cap-run-on-server"></a></h3>
    <p>Some attackers can convince some publishers (perhaps by paying them) to modify
 their server software. This could be used, for example, to receive <a data-link-type="dfn" href="#user-id" id="ref-for-user-id②">user IDs</a> passed in a path segment instead of a query parameter, without breaking the
 normal logic mapping a path to content.</p>
-   <h3 class="heading settled" data-level="4.4" id="cap-read-logs"><span class="secno">4.4. </span><span class="content">Read server logs</span><a class="self-link" href="#cap-read-logs"></a></h3>
+   <h3 class="heading settled" data-level="5.4" id="cap-read-logs"><span class="secno">5.4. </span><span class="content">Read server logs</span><a class="self-link" href="#cap-read-logs"></a></h3>
    <p>Servers can keep logs of requests. The attacker may be able to convince some
 server operators to give them these logs or let them run queries over the logs.</p>
-   <h2 class="heading settled" data-level="5" id="goals"><span class="secno">5. </span><span class="content">Attacker goals</span><a class="self-link" href="#goals"></a></h2>
+   <h2 class="heading settled" data-level="6" id="goals"><span class="secno">6. </span><span class="content">Attacker goals</span><a class="self-link" href="#goals"></a></h2>
    <p>These are things <a data-link-type="dfn" href="#attacker" id="ref-for-attacker">attackers</a> want to accomplish.</p>
-   <h3 class="heading settled" data-level="5.1" id="goals-metrics"><span class="secno">5.1. </span><span class="content">User metrics within a single site</span><a class="self-link" href="#goals-metrics"></a></h3>
-   <h4 class="heading settled" data-level="5.1.1" id="goal-click-tracking"><span class="secno">5.1.1. </span><span class="content">Click tracking</span><a class="self-link" href="#goal-click-tracking"></a></h4>
+   <h3 class="heading settled" data-level="6.1" id="goals-metrics"><span class="secno">6.1. </span><span class="content">User metrics within a single site</span><a class="self-link" href="#goals-metrics"></a></h3>
+   <h4 class="heading settled" data-level="6.1.1" id="goal-click-tracking"><span class="secno">6.1.1. </span><span class="content">Click tracking</span><a class="self-link" href="#goal-click-tracking"></a></h4>
    <p>A site wants to know which of its links a user clicks on.</p>
-   <h3 class="heading settled" data-level="5.2" id="goals-tracking"><span class="secno">5.2. </span><span class="content">Tracking</span><a class="self-link" href="#goals-tracking"></a></h3>
+   <h3 class="heading settled" data-level="6.2" id="goals-tracking"><span class="secno">6.2. </span><span class="content">Tracking</span><a class="self-link" href="#goals-tracking"></a></h3>
    <p><a data-link-type="biblio" href="#biblio-tracking-dnt">[tracking-dnt]</a> defines "tracking" as the collection of data regarding a
 particular user’s activity across multiple distinct contexts and the retention,
 use, or sharing of data derived from that activity outside the context in which
 it occurred. A context is a set of resources that are controlled by the same
 party or jointly controlled by a set of parties. The following are building
 blocks that allow a tracker to build such a log of a user’s activity.</p>
-   <h4 class="heading settled" data-level="5.2.1" id="goal-transfer-userid"><span class="secno">5.2.1. </span><span class="content">Transfer user ID from publisher 1 to publisher 2 on navigation.</span><a class="self-link" href="#goal-transfer-userid"></a></h4>
+   <h4 class="heading settled" data-level="6.2.1" id="goal-transfer-userid"><span class="secno">6.2.1. </span><span class="content">Transfer user ID from publisher 1 to publisher 2 on navigation.</span><a class="self-link" href="#goal-transfer-userid"></a></h4>
    <p>When the user clicks a link from <a data-link-type="dfn" href="#publisher" id="ref-for-publisher">publisher</a> 1 that navigates to <a data-link-type="dfn" href="#publisher" id="ref-for-publisher①">publisher</a> 2, publisher 2’s server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id③">user ID</a> on publisher 2 and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id④">user ID</a> on
 publisher 1 represent the same <a data-link-type="dfn" href="#user" id="ref-for-user③">user</a>.</p>
-   <h4 class="heading settled" data-level="5.2.2" id="goal-userid-tracker-to-self-in-pub"><span class="secno">5.2.2. </span><span class="content">Transfer user ID from tracker to that tracker running within a publisher, on navigation.</span><a class="self-link" href="#goal-userid-tracker-to-self-in-pub"></a></h4>
+   <h4 class="heading settled" data-level="6.2.2" id="goal-userid-tracker-to-self-in-pub"><span class="secno">6.2.2. </span><span class="content">Transfer user ID from tracker to that tracker running within a publisher, on navigation.</span><a class="self-link" href="#goal-userid-tracker-to-self-in-pub"></a></h4>
    <p>When the user clicks a link from <code>tracker.example</code> to <code>publisher.example</code>, that <a data-link-type="dfn" href="#tracker" id="ref-for-tracker">tracker’s</a> server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑤">user ID</a> for either <code>publisher.example</code> or
 the tracker running within <code>publisher.example</code> and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑥">user ID</a> for <code>tracker.example</code> represent the same <a data-link-type="dfn" href="#user" id="ref-for-user④">user</a>.</p>
-   <h4 class="heading settled" data-level="5.2.3" id="goal-userid-tracker-in-pub1-to-self-in-pub2"><span class="secno">5.2.3. </span><span class="content">Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</span><a class="self-link" href="#goal-userid-tracker-in-pub1-to-self-in-pub2"></a></h4>
+   <h4 class="heading settled" data-level="6.2.3" id="goal-userid-tracker-in-pub1-to-self-in-pub2"><span class="secno">6.2.3. </span><span class="content">Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</span><a class="self-link" href="#goal-userid-tracker-in-pub1-to-self-in-pub2"></a></h4>
    <p>When the user clicks a link from <code>publisher1.example</code> (where a tracker was
 embedded within that site) to <code>publisher2.example</code> (which has the same tracker
 embedded), that <a data-link-type="dfn" href="#tracker" id="ref-for-tracker①">tracker’s</a> server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑦">user ID</a> for either <code>publisher1.example</code> or the tracker running within <code>publisher1.example</code> and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑧">user ID</a> for either <code>publisher2.example</code> or the tracker running within <code>publisher2.example</code> represent the same <a data-link-type="dfn" href="#user" id="ref-for-user⑤">user</a>.</p>
-   <h4 class="heading settled" data-level="5.2.4" id="goal-prob-transfer-userid"><span class="secno">5.2.4. </span><span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</span><a class="self-link" href="#goal-prob-transfer-userid"></a></h4>
+   <h4 class="heading settled" data-level="6.2.4" id="goal-prob-transfer-userid"><span class="secno">6.2.4. </span><span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</span><a class="self-link" href="#goal-prob-transfer-userid"></a></h4>
    <p>When the user clicks a link from <a data-link-type="dfn" href="#publisher" id="ref-for-publisher②">publisher</a> 1 that navigates to <a data-link-type="dfn" href="#publisher" id="ref-for-publisher③">publisher</a> 2, publisher 2’s server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑨">user ID</a> on publisher 2 and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①⓪">user ID</a> on
 publisher 1 are more likely than chance to represent the same <a data-link-type="dfn" href="#user" id="ref-for-user⑥">user</a>.</p>
-   <h4 class="heading settled" data-level="5.2.5" id="goal-prob-transfer-userid-no-nav"><span class="secno">5.2.5. </span><span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</span><a class="self-link" href="#goal-prob-transfer-userid-no-nav"></a></h4>
+   <h4 class="heading settled" data-level="6.2.5" id="goal-prob-transfer-userid-no-nav"><span class="secno">6.2.5. </span><span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</span><a class="self-link" href="#goal-prob-transfer-userid-no-nav"></a></h4>
    <p>While the user is visiting <a data-link-type="dfn" href="#publisher" id="ref-for-publisher④">publisher</a> 1, that publisher can tell <a data-link-type="dfn" href="#publisher" id="ref-for-publisher⑤">publisher</a> 2 that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①①">user ID</a> on publisher 2 and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①②">user ID</a> on publisher
 1 are more likely than chance to represent the same <a data-link-type="dfn" href="#user" id="ref-for-user⑦">user</a>, without requiring
 the user to navigate from publisher 1 to publisher 2.</p>
-   <h2 class="heading settled" data-level="6" id="essential"><span class="secno">6. </span><span class="content">Essential Web APIs</span><a class="self-link" href="#essential"></a></h2>
+   <h2 class="heading settled" data-level="7" id="essential"><span class="secno">7. </span><span class="content">Essential Web APIs</span><a class="self-link" href="#essential"></a></h2>
    <p>These are Web APIs and features that would destroy the Web as we know it if they
 went away. The placement of some features here will be contentious, and those
 features are marked as I discover the contention.</p>
-   <h3 class="heading settled" data-level="6.1" id="ess-js-requests"><span class="secno">6.1. </span><span class="content">Javascript can make requests to servers</span><a class="self-link" href="#ess-js-requests"></a></h3>
+   <h3 class="heading settled" data-level="7.1" id="ess-js-requests"><span class="secno">7.1. </span><span class="content">Javascript can make requests to servers</span><a class="self-link" href="#ess-js-requests"></a></h3>
    <p>This could perhaps be broken down into same-origin requests and cross-origin
 requests, with cross-origin requests being more contentious.</p>
-   <h3 class="heading settled" data-level="6.2" id="ess-server-defined-paths"><span class="secno">6.2. </span><span class="content">Servers can define the paths under which they host content</span><a class="self-link" href="#ess-server-defined-paths"></a></h3>
+   <h3 class="heading settled" data-level="7.2" id="ess-server-defined-paths"><span class="secno">7.2. </span><span class="content">Servers can define the paths under which they host content</span><a class="self-link" href="#ess-server-defined-paths"></a></h3>
    <p>These paths can include opaque strings that neither a human nor a user agent can
 interpret without knowing how the server works, like <code>/t/proposal-packaging-for-the-web-signed-and-indexed/1827/10</code> and <code>/Moby-Dick-Herman-Melville/dp/1503280780/</code>.</p>
-   <h2 class="heading settled" data-level="7" id="acknowledgements"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+   <h2 class="heading settled" data-level="8" id="acknowledgements"><span class="secno">8. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>As far as I know, Safari did the first work to prove that a more
 privacy-preserving web was possible, by blocking third-party cookies by default
 and then shipping <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">ITP
@@ -1907,7 +1974,7 @@ that information could flow between sites without compromising user privacy.</p>
   <aside class="dfn-panel" data-for="term-for-section-4.1.2.6">
    <a href="https://tools.ietf.org/html/rfc6265#section-4.1.2.6">https://tools.ietf.org/html/rfc6265#section-4.1.2.6</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-section-4.1.2.6">4.2. Run Javascript in a first-party context</a>
+    <li><a href="#ref-for-section-4.1.2.6">5.2. Run Javascript in a first-party context</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -1950,6 +2017,9 @@ that information could flow between sites without compromising user privacy.</p>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
+   <div class="issue"> This section is not complete. It lists a lot of potential privacy
+threats, but needs editing to pick which kinds of threats belong in this threat
+model and to unify the multiple lists of suggestions.<a href="#issue-05a52c93"> ↵ </a></div>
    <div class="issue"> Should we mark goals attackers can currently achieve, which we want to
 remove, differently from goals attackers already can’t achieve?<a href="#issue-eb037c92"> ↵ </a></div>
   </div>
@@ -1981,25 +2051,25 @@ remove, differently from goals attackers already can’t achieve?<a href="#issue
    <b><a href="#user">#user</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user">2. Terminology</a> <a href="#ref-for-user①">(2)</a> <a href="#ref-for-user②">(3)</a>
-    <li><a href="#ref-for-user③">5.2.1. Transfer user ID from publisher 1 to publisher 2 on navigation.</a>
-    <li><a href="#ref-for-user④">5.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a>
-    <li><a href="#ref-for-user⑤">5.2.3. Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a>
-    <li><a href="#ref-for-user⑥">5.2.4. Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a>
-    <li><a href="#ref-for-user⑦">5.2.5. Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a>
+    <li><a href="#ref-for-user③">6.2.1. Transfer user ID from publisher 1 to publisher 2 on navigation.</a>
+    <li><a href="#ref-for-user④">6.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a>
+    <li><a href="#ref-for-user⑤">6.2.3. Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a>
+    <li><a href="#ref-for-user⑥">6.2.4. Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a>
+    <li><a href="#ref-for-user⑦">6.2.5. Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="user-id">
    <b><a href="#user-id">#user-id</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-id">2. Terminology</a>
-    <li><a href="#ref-for-user-id①">3.1. Anti-tracking</a>
-    <li><a href="#ref-for-user-id②">4.3. Modify server processing</a>
-    <li><a href="#ref-for-user-id③">5.2.1. Transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-user-id④">(2)</a>
-    <li><a href="#ref-for-user-id⑤">5.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a> <a href="#ref-for-user-id⑥">(2)</a>
-    <li><a href="#ref-for-user-id⑦">5.2.3. Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a> <a href="#ref-for-user-id⑧">(2)</a>
-    <li><a href="#ref-for-user-id⑨">5.2.4. Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-user-id①⓪">(2)</a>
-    <li><a href="#ref-for-user-id①①">5.2.5. Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a> <a href="#ref-for-user-id①②">(2)</a>
-    <li><a href="#ref-for-user-id①③">7. Acknowledgements</a>
+    <li><a href="#ref-for-user-id①">4.1. Anti-tracking</a>
+    <li><a href="#ref-for-user-id②">5.3. Modify server processing</a>
+    <li><a href="#ref-for-user-id③">6.2.1. Transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-user-id④">(2)</a>
+    <li><a href="#ref-for-user-id⑤">6.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a> <a href="#ref-for-user-id⑥">(2)</a>
+    <li><a href="#ref-for-user-id⑦">6.2.3. Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a> <a href="#ref-for-user-id⑧">(2)</a>
+    <li><a href="#ref-for-user-id⑨">6.2.4. Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-user-id①⓪">(2)</a>
+    <li><a href="#ref-for-user-id①①">6.2.5. Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a> <a href="#ref-for-user-id①②">(2)</a>
+    <li><a href="#ref-for-user-id①③">8. Acknowledgements</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="global-identifier">
@@ -2011,22 +2081,22 @@ remove, differently from goals attackers already can’t achieve?<a href="#issue
   <aside class="dfn-panel" data-for="attacker">
    <b><a href="#attacker">#attacker</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-attacker">5. Attacker goals</a>
+    <li><a href="#ref-for-attacker">6. Attacker goals</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="publisher">
    <b><a href="#publisher">#publisher</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-publisher">5.2.1. Transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-publisher①">(2)</a>
-    <li><a href="#ref-for-publisher②">5.2.4. Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-publisher③">(2)</a>
-    <li><a href="#ref-for-publisher④">5.2.5. Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a> <a href="#ref-for-publisher⑤">(2)</a>
+    <li><a href="#ref-for-publisher">6.2.1. Transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-publisher①">(2)</a>
+    <li><a href="#ref-for-publisher②">6.2.4. Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-publisher③">(2)</a>
+    <li><a href="#ref-for-publisher④">6.2.5. Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a> <a href="#ref-for-publisher⑤">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="tracker">
    <b><a href="#tracker">#tracker</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-tracker">5.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a>
-    <li><a href="#ref-for-tracker①">5.2.3. Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a>
+    <li><a href="#ref-for-tracker">6.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a>
+    <li><a href="#ref-for-tracker①">6.2.3. Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
