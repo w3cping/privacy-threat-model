@@ -15,6 +15,6 @@ migrate to, and that new APIs should be held to. This is meant to be a
 behavior that is deemed essential to the viability of the Web.
 
 Since people are likely to disagree about which APIs are essential to the Web,
-when saying that an attacker can achieve their goal, I describe how the attacker
-achieves it using particular "essential" APIs, and I provide an index of those
+when saying that an attacker can achieve their goal, we describe how the attacker
+achieves it using particular "essential" APIs, and we provide an index of those
 APIs so people can point out ones that they don't consider essential.
