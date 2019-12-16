@@ -2,7 +2,8 @@
 Title: Target Privacy Threat Model
 Shortname: privacy-threat-model
 Level: none
-Status: DREAM
+Group: ping
+Status: ED
 Repository: w3cping/privacy-threat-model
 URL: https://w3cping.github.io/privacy-threat-model
 Editor: Jeffrey Yasskin, Google Inc. https://google.com/, jyasskin@google.com, w3cid 72192
