@@ -23,6 +23,11 @@ Assume Explicit For: on
     ],
     "href": "https://github.com/sleevi/psl-problems",
     "title": "Public Suffix List Problems"
+  },
+  "WHAT-DOES-PRIVATE-BROWSING-DO": {
+    "authors": ["Martin Shelton"],
+    "href": "https://medium.com/@mshelton/what-does-private-browsing-mode-do-adfe5a70a8b1",
+    "title": "What Does Private Browsing Mode Do?"
   }
 }
 </pre>
@@ -130,76 +135,147 @@ operate them. They are not rigorously defined.
 
 # High-level threats # {#high-level-threats}
 
-User agents should attempt to defend their users from a variety of high-level threats or attacker goals, described in this section. [[#goals]] then describes the low-level steps an attacker would use to achieve these high-level goals.
+User agents should attempt to defend their users from a variety of high-level
+threats or attacker goals, described in this section. [[#goals]] then describes
+the low-level steps an attacker would use to achieve these high-level goals.
 
-Issue: This section is not complete. It lists a lot of potential privacy
-threats, but needs editing to pick which kinds of threats belong in this threat
-model and to unify the multiple lists of suggestions.
+[[RFC6973]] describes the following high-level privacy threats, which the TAG
+has adopted into [[security-privacy-questionnaire#threats]]:
 
-The following threats were brainstormed in the 2019 TPAC PING meeting:
-
-*  Unexpected Recognition (being confident that this is the same person/device
-    you saw before), cross-site. This threat is discussed in
-    [[#model-anti-tracking]].
-* Recognition, same-site
-* Benign information disclosure (connected hardware [game controller or
-    assistive device], system preferences [like dark mode]…)
-* Sensitive information disclosure (user location, user camera, file
-    information, financial data, contacts, calendar…)
-* Intrusion (displaying messages/notifications, playing sounds, full screen…)
-* Obtaining capabilities (sending SMS, finance/billing…)
-
-The following threats are copied from
-[[security-privacy-questionnaire#threats]]. They are not all addressed in this
-document.
-
-: Surveillance
+: <dfn>Surveillance</dfn>
 
 :: Surveillance is the observation or monitoring of an individual’s
-    communications or activities.
+    communications or activities. See [[RFC6973#section-5.1.1]].
 
-: Stored Data Compromise
+: <dfn noexport>Stored Data Compromise</dfn>
 
 :: End systems that do not take adequate measures to secure stored data from
-    unauthorized or inappropriate access.
+    unauthorized or inappropriate access. See [[RFC6973#section-5.1.2]].
 
-: Intrusion
+: <dfn>Intrusion</dfn>
 
 :: Intrusion consists of invasive acts that disturb or interrupt one’s life or
-    activities.
+    activities. See [[RFC6973#section-5.1.3]].
 
-: Misattribution
+: <dfn>Misattribution</dfn>
 
-::: Misattribution occurs when data or communications related to one individual
-    are attributed to another.
+:: Misattribution occurs when data or communications related to one individual
+    are attributed to another. See [[RFC6973#section-5.1.4]].
 
-: Correlation
+: <dfn>Correlation</dfn>
 
 :: Correlation is the combination of various pieces of information related to an
-    individual or that obtain that characteristic when combined.
+    individual or that obtain that characteristic when combined. See
+    [[RFC6973#section-5.2.1]].
 
-: Identification
+: <dfn>Identification</dfn>
 
 :: Identification is the linking of information to a particular individual to
     infer an individual’s identity or to allow the inference of an individual’s
-    identity.
+    identity. See [[RFC6973#section-5.2.2]].
 
-: Secondary Use
+: <dfn>Secondary Use</dfn>
 
 :: Secondary use is the use of collected information about an individual without
     the individual’s consent for a purpose different from that for which the
-    information was collected.
+    information was collected. See [[RFC6973#section-5.2.3]].
 
-: Disclosure
+: <dfn>Disclosure</dfn>
 
 :: Disclosure is the revelation of information about an individual that affects
-    the way others judge the individual.
+    the way others judge the individual. See [[RFC6973#section-5.2.4]].
 
-: Exclusion
+: <dfn noexport>Exclusion</dfn>
 
 :: Exclusion is the failure to allow individuals to know about the data that
-    others have about them and to participate in its handling and use.
+    others have about them and to participate in its handling and use. See
+    [[RFC6973#section-5.2.5]].
 
+These threats combine into the particular concrete threats we want web
+specifications to defend against, described in subsections here:
+
+## Unexpected same-site recognition ## {#hl-recognition-same-site}
+
+Contributes to [=surveillance=], [=correlation=], and [=identification=].
+
+This occurs if a site can determine with high probability that a visit to that
+site is coming from the same user as another earlier visit to the same site, and
+the user expects not to be associated.
+
+A user's expectation that their two visits won't be associated might come from:
+
+* Using a browser that promises to avoid such correlation.
+* Using their browser's private browsing mode. ([[WHAT-DOES-PRIVATE-BROWSING-DO]])
+* Using two different browser profiles between the two visits.
+* Explicitly clearing the site's cookies or storage.
+
+This recognition is generally accomplished by either "supercookies" or [=browser
+fingerprinting=].
+
+Supercookies occur when a browser stores data for a site but makes that data
+more difficult to clear than other cookies or storage.
+[[fingerprinting-guidance#clearing-all-local-state]] discusses how
+specifications can help browsers avoid this mistake.
+
+Fingerprinting consists of using attributes of the user's browser and platform
+that are consistent between the two visits and probabilistically unique to the
+user.
+
+The attributes can be exposed as information about the user's device that is
+otherwise benign (vs [[#hl-sensitive-information]]). For example:
+
+* What hardware is connected to the user's device? A game controller? An
+    assistive device?
+* What system preferences has the user set? Dark mode, etc...
+* ...
+
+See [[fingerprinting-guidance]] for how to mitigate this threat.
+
+## Unexpected cross-site recognition ## {#hl-recognition-cross-site}
+
+Contributes to [=surveillance=], [=correlation=], and [=identification=],
+usually more significantly than [[#hl-recognition-same-site]].
+
+This occurs if a site can determine with high probability that a visit to that
+site comes from the same user as another visit to a *different* site.  This
+threat is discussed in [[#model-anti-tracking]].
+
+## Sensitive information disclosure ## {#hl-sensitive-information}
+
+Contributes to [=correlation=], [=identification=], [=secondary use=], and
+[=disclosure=].
+
+Many pieces of information about a user could cause privacy harms if disclosed.
+For example:
+
+* The user's location.
+* Video or audio from the user's camera or microphone.
+* The content of certain files on the user's filesystem.
+* Financial data.
+* Contacts.
+* Calendar entries.
+* ...
+
+## Intrusive behavior ## {#hl-intrusion}
+
+See [=intrusion=].
+
+Privacy harms don't always come from a site learning things. For example it is
+intrusive for a site to
+
+* Display messages or notifications,
+* Play sounds,
+* Occupy the full screen,
+* etc.
+
+if the user doesn't intend for it to do so.
+
+## Powerful capabilities ## {#hl-capabilities}
+
+Contributes to [=misattribution=].
+
+For example, a site that sends SMS without the user's intent could cause them to
+be blamed for things they didn't intend.
 
 <pre class="include">
 path: model.bsinc
