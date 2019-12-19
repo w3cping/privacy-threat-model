@@ -84,9 +84,9 @@ essential.
 [[HTML]] defines an [=origin=] as the tuple of a scheme, hostname, and port that
 provides the main security boundary on the web.
 
-A <dfn>site</dfn> is the set of [=origins=] whose hostnames share a common
-[=registrable domain=]. Note that there are problems ([[PSL-PROBLEMS]]) with
-using [=registrable domains=] as a logical boundary.
+A <dfn>site</dfn> is a set of [=origins=] that are all [=same site=] with each
+other. Note that there are problems ([[PSL-PROBLEMS]]) with using [=registrable
+domains=] as a logical boundary.
 
 A <dfn>party</dfn> is defined by [[tracking-dnt]] as "a natural person, a legal
 entity, or a set of legal entities that share common owner(s), common
