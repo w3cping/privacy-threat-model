@@ -7,6 +7,7 @@ Status: ED
 Repository: w3cping/privacy-threat-model
 URL: https://w3cping.github.io/privacy-threat-model
 Editor: Jeffrey Yasskin, Google Inc. https://google.com/, jyasskin@google.com, w3cid 72192
+Editor: Tom Lowenthal, Brave https://brave.com/, tom@brave.com
 Abstract: A privacy threat model we should migrate the web toward.
 
 Warning: Not Ready
