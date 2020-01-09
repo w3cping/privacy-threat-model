@@ -247,7 +247,7 @@ usually more significantly than [[#hl-recognition-same-site]].
 
 This occurs if a site can determine with high probability that a visit to that
 site comes from the same user as another visit to a *different* site.  This
-threat is discussed in [[#model-anti-tracking]].
+threat is discussed in [[#model-cross-site-recognition]].
 
 ## Sensitive information disclosure ## {#hl-sensitive-information}
 
@@ -286,8 +286,23 @@ Contributes to [=misattribution=].
 For example, a site that sends SMS without the user's intent could cause them to
 be blamed for things they didn't intend.
 
+# Threat Model # {#model}
+
+For each of the <a href="#high-level-threats">high-level threats</a>, we
+describe a threat model: a description of what goals attackers with various
+capabilities should or should not be able to achieve. For simple threats, a
+model can be expressed in prose, while complex threat models use a grid to
+express the web platform's target guarantees.
+
+<span style="color:green">✘</span> indicates that the goal should be frustrated,
+while <span style="color:red">✓</span> indicates that the attacker can achieve
+their goal.
+
+Issue: Should we mark goals attackers can currently achieve, which we want to
+remove, differently from goals attackers already can't achieve?
+
 <pre class="include">
-path: model.bsinc
+path: xsite-tracking-model.bsinc
 </pre>
 
 <pre class="include">

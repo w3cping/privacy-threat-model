@@ -1,17 +1,4 @@
-# Threat Model # {#model}
-
-This table summarizes which capabilities should allow attackers to achieve which
-goals and, conversely, which goals should be frustrated for attackers even when
-they have certain capabilities.
-
-<span style="color:green">✘</span> indicates that the goal should be frustrated,
-while <span style="color:red">✓</span> indicates that the attacker can achieve
-their goal.
-
-Issue: Should we mark goals attackers can currently achieve, which we want to
-remove, differently from goals attackers already can't achieve?
-
-## Anti-tracking ## {#model-anti-tracking}
+## Cross-site recognition ## {#model-cross-site-recognition}
 
 <table class="threatmodel">
 <tr class="goals">
