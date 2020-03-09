@@ -1221,9 +1221,9 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 6a4c097ae8b731ee02752a258e8ac5ffbb752299" name="generator">
+  <meta content="Bikeshed version 70c86369151f7b7b97b78c0f664dba09a4024ca2" name="generator">
   <link href="https://w3cping.github.io/privacy-threat-model" rel="canonical">
-  <meta content="d18e3c9315436106b2fb789fe2b83a463af1bab4" name="document-revision">
+  <meta content="7ccc40fd6e6a4551b1e8ff9da0cb5294ae85dc85" name="document-revision">
 <style>
 .threatmodel tr.goals th {
   padding: 1ex;
@@ -1430,7 +1430,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Target Privacy Threat Model</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-01-09">9 January 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-03-09">9 March 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1495,7 +1495,15 @@ pre .property::before, pre .property::after {
    <ol class="toc" role="directory">
     <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
     <li><a href="#terminology"><span class="secno">2</span> <span class="content">Terminology</span></a>
-    <li><a href="#high-level-threats"><span class="secno">3</span> <span class="content">High-level threats</span></a>
+    <li>
+     <a href="#high-level-threats"><span class="secno">3</span> <span class="content">High-level threats</span></a>
+     <ol class="toc">
+      <li><a href="#hl-recognition-same-site"><span class="secno">3.1</span> <span class="content">Unwanted same-site recognition</span></a>
+      <li><a href="#hl-recognition-cross-site"><span class="secno">3.2</span> <span class="content">Unwanted cross-site recognition</span></a>
+      <li><a href="#hl-sensitive-information"><span class="secno">3.3</span> <span class="content">Sensitive information disclosure</span></a>
+      <li><a href="#hl-intrusion"><span class="secno">3.4</span> <span class="content">Intrusive behavior</span></a>
+      <li><a href="#hl-capabilities"><span class="secno">3.5</span> <span class="content">Powerful capabilities</span></a>
+     </ol>
     <li>
      <a href="#model"><span class="secno">4</span> <span class="content">Threat Model</span></a>
      <ol class="toc">
@@ -1602,71 +1610,141 @@ not mind their collection of this information.</p>
    <p>This document uses the terms <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="publisher">publisher</dfn> and <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="tracker">tracker</dfn> colloquially to refer to particular kinds of <a data-link-type="dfn" href="#site" id="ref-for-site①">sites</a> and the <a data-link-type="dfn" href="#party" id="ref-for-party①">parties</a> that
 operate them. They are not rigorously defined.</p>
    <h2 class="heading settled" data-level="3" id="high-level-threats"><span class="secno">3. </span><span class="content">High-level threats</span><a class="self-link" href="#high-level-threats"></a></h2>
-   <p>User agents should attempt to defend their users from a variety of high-level threats or attacker goals, described in this section. <a href="#goals">§ 6 Attacker goals</a> then describes the low-level steps an attacker would use to achieve these high-level goals.</p>
-   <p class="issue" id="issue-05a52c93"><a class="self-link" href="#issue-05a52c93"></a> This section is not complete. It lists a lot of potential privacy
-threats, but needs editing to pick which kinds of threats belong in this threat
-model and to unify the multiple lists of suggestions.</p>
-   <p>The following threats were brainstormed in the 2019 TPAC PING meeting:</p>
-   <ul>
-    <li data-md>
-     <p>Unexpected Recognition (being confident that this is the same person/device
-you saw before), cross-site. This threat is discussed in <a href="#model-anti-tracking">§ 4.1 Anti-tracking</a>.</p>
-    <li data-md>
-     <p>Recognition, same-site</p>
-    <li data-md>
-     <p>Benign information disclosure (connected hardware [game controller or
-assistive device], system preferences [like dark mode]…)</p>
-    <li data-md>
-     <p>Sensitive information disclosure (user location, user camera, file
-information, financial data, contacts, calendar…)</p>
-    <li data-md>
-     <p>Intrusion (displaying messages/notifications, playing sounds, full screen…)</p>
-    <li data-md>
-     <p>Obtaining capabilities (sending SMS, finance/billing…)</p>
-   </ul>
-   <p>The following threats are copied from <a href="https://www.w3.org/TR/security-privacy-questionnaire/#threats">Self-Review Questionnaire: Security and Privacy §threats</a>. They are not all addressed in this
-document.</p>
+   <p>User agents should attempt to defend their users from a variety of high-level
+threats or attacker goals, described in this section. <a href="#goals">§ 6 Attacker goals</a> then describes
+the low-level steps an attacker would use to achieve these high-level goals.</p>
+   <p><a data-link-type="biblio" href="#biblio-rfc6973">[RFC6973]</a> describes the following high-level privacy threats, which the TAG
+has adopted into <a href="https://www.w3.org/TR/security-privacy-questionnaire/#threats">Self-Review Questionnaire: Security and Privacy §threats</a>:</p>
    <dl>
-    <dt data-md>Surveillance
+    <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="surveillance">Surveillance</dfn>
     <dd data-md>
      <p>Surveillance is the observation or monitoring of an individual’s
-communications or activities.</p>
-    <dt data-md>Stored Data Compromise
+communications or activities. See <a href="https://tools.ietf.org/html/rfc6973#section-5.1.1">Privacy Considerations for Internet Protocols §section-5.1.1</a>.</p>
+    <dt data-md><dfn data-dfn-type="dfn" data-noexport id="stored-data-compromise">Stored Data Compromise<a class="self-link" href="#stored-data-compromise"></a></dfn>
     <dd data-md>
      <p>End systems that do not take adequate measures to secure stored data from
-unauthorized or inappropriate access.</p>
-    <dt data-md>Intrusion
+unauthorized or inappropriate access. See <a href="https://tools.ietf.org/html/rfc6973#section-5.1.2">Privacy Considerations for Internet Protocols §section-5.1.2</a>.</p>
+    <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="intrusion">Intrusion</dfn>
     <dd data-md>
      <p>Intrusion consists of invasive acts that disturb or interrupt one’s life or
-activities.</p>
-    <dt data-md>Misattribution
-   </dl>
-   <p>::: Misattribution occurs when data or communications related to one individual
-    are attributed to another.</p>
-   <dl>
-    <dt data-md>Correlation
+activities. See <a href="https://tools.ietf.org/html/rfc6973#section-5.1.3">Privacy Considerations for Internet Protocols §section-5.1.3</a>.</p>
+    <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="misattribution">Misattribution</dfn>
+    <dd data-md>
+     <p>Misattribution occurs when data or communications related to one individual
+are attributed to another. See <a href="https://tools.ietf.org/html/rfc6973#section-5.1.4">Privacy Considerations for Internet Protocols §section-5.1.4</a>.</p>
+    <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="correlation">Correlation</dfn>
     <dd data-md>
      <p>Correlation is the combination of various pieces of information related to an
-individual or that obtain that characteristic when combined.</p>
-    <dt data-md>Identification
+individual or that obtain that characteristic when combined. See <a href="https://tools.ietf.org/html/rfc6973#section-5.2.1">Privacy Considerations for Internet Protocols §section-5.2.1</a>.</p>
+    <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="identification">Identification</dfn>
     <dd data-md>
      <p>Identification is the linking of information to a particular individual to
 infer an individual’s identity or to allow the inference of an individual’s
-identity.</p>
-    <dt data-md>Secondary Use
+identity. See <a href="https://tools.ietf.org/html/rfc6973#section-5.2.2">Privacy Considerations for Internet Protocols §section-5.2.2</a>.</p>
+    <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="secondary-use">Secondary Use</dfn>
     <dd data-md>
      <p>Secondary use is the use of collected information about an individual without
 the individual’s consent for a purpose different from that for which the
-information was collected.</p>
-    <dt data-md>Disclosure
+information was collected. See <a href="https://tools.ietf.org/html/rfc6973#section-5.2.3">Privacy Considerations for Internet Protocols §section-5.2.3</a>.</p>
+    <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="disclosure">Disclosure</dfn>
     <dd data-md>
      <p>Disclosure is the revelation of information about an individual that affects
-the way others judge the individual.</p>
-    <dt data-md>Exclusion
+the way others judge the individual. See <a href="https://tools.ietf.org/html/rfc6973#section-5.2.4">Privacy Considerations for Internet Protocols §section-5.2.4</a>.</p>
+    <dt data-md><dfn data-dfn-type="dfn" data-noexport id="exclusion">Exclusion<a class="self-link" href="#exclusion"></a></dfn>
     <dd data-md>
      <p>Exclusion is the failure to allow individuals to know about the data that
-others have about them and to participate in its handling and use.</p>
+others have about them and to participate in its handling and use. See <a href="https://tools.ietf.org/html/rfc6973#section-5.2.5">Privacy Considerations for Internet Protocols §section-5.2.5</a>.</p>
    </dl>
+   <p>These threats combine into the particular concrete threats we want web
+specifications to defend against, described in subsections here:</p>
+   <h3 class="heading settled" data-level="3.1" id="hl-recognition-same-site"><span class="secno">3.1. </span><span class="content">Unwanted same-site recognition</span><a class="self-link" href="#hl-recognition-same-site"></a></h3>
+   <p>Contributes to <a data-link-type="dfn" href="#surveillance" id="ref-for-surveillance">surveillance</a>, <a data-link-type="dfn" href="#correlation" id="ref-for-correlation">correlation</a>, and <a data-link-type="dfn" href="#identification" id="ref-for-identification">identification</a>.</p>
+   <p>Users of most instantiations of the web platform expect that if they visit a
+site on one day, and then visit again the next day, the site will be able to
+recognize that they’re the same user. This allows sites to save the user’s
+preferences, shopping carts, etc. The web platform offers many mechanisms that
+are either intended to accomplish this recognition or that can be trivially used
+for it, including <a data-link-type="biblio" href="#biblio-rfc6265">cookies</a>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage" id="ref-for-dom-localstorage">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/IndexedDB/#dom-windoworworkerglobalscope-indexeddb" id="ref-for-dom-windoworworkerglobalscope-indexeddb">indexedDB</a></code>, <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#cachestorage" id="ref-for-cachestorage">CacheStorage</a></code>, and other forms of
+storage.</p>
+   <p>A privacy harm only occurs if the user wants to break the association between
+two visits, but the site can still determine with high probability that the two
+visits came from the same user.</p>
+   <p>A user might expect that their two visits won’t be associated if they:</p>
+   <ul>
+    <li data-md>
+     <p>Use a browser that promises to avoid such correlation.</p>
+    <li data-md>
+     <p>Use their browser’s private browsing mode. (<a data-link-type="biblio" href="#biblio-what-does-private-browsing-do">[WHAT-DOES-PRIVATE-BROWSING-DO]</a>)</p>
+    <li data-md>
+     <p>Use two different browser profiles between the two visits.</p>
+    <li data-md>
+     <p>Explicitly clear the site’s cookies or storage.</p>
+   </ul>
+   <p>This recognition is generally accomplished by either "supercookies" or <a data-link-type="dfn" href="https://w3c.github.io/fingerprinting-guidance/#dfn-browser-fingerprinting" id="ref-for-dfn-browser-fingerprinting">browser
+fingerprinting</a>.</p>
+   <p>Supercookies occur when a browser stores data for a site but makes that data
+more difficult to clear than other cookies or storage. <a href="https://w3c.github.io/fingerprinting-guidance/#clearing-all-local-state">Fingerprinting Guidance §5.4 Clearing all local state</a> discusses how
+specifications can help browsers avoid this mistake.</p>
+   <p>Fingerprinting consists of using attributes of the user’s browser and platform
+that are consistent between the two visits and probabilistically unique to the
+user.</p>
+   <p>The attributes can be exposed as information about the user’s device that is
+otherwise benign (as opposed to <a href="#hl-sensitive-information">§ 3.3 Sensitive information disclosure</a>). For example:</p>
+   <ul>
+    <li data-md>
+     <p>What hardware is connected to the user’s device? A game controller? An
+assistive device?</p>
+    <li data-md>
+     <p>What system preferences has the user set? Dark mode, etc...</p>
+    <li data-md>
+     <p>...</p>
+   </ul>
+   <p>See <a data-link-type="biblio" href="#biblio-fingerprinting-guidance">[fingerprinting-guidance]</a> for how to mitigate this threat.</p>
+   <h3 class="heading settled" data-level="3.2" id="hl-recognition-cross-site"><span class="secno">3.2. </span><span class="content">Unwanted cross-site recognition</span><a class="self-link" href="#hl-recognition-cross-site"></a></h3>
+   <p>Contributes to <a data-link-type="dfn" href="#surveillance" id="ref-for-surveillance①">surveillance</a>, <a data-link-type="dfn" href="#correlation" id="ref-for-correlation①">correlation</a>, and <a data-link-type="dfn" href="#identification" id="ref-for-identification①">identification</a>,
+usually more significantly than <a href="#hl-recognition-same-site">§ 3.1 Unwanted same-site recognition</a>.</p>
+   <p>This occurs if a site can determine with high probability that a visit to that
+site comes from the same user as another visit to a <em>different</em> site.  This
+threat is discussed in <a href="#model-anti-tracking">§ 4.1 Anti-tracking</a>.</p>
+   <h3 class="heading settled" data-level="3.3" id="hl-sensitive-information"><span class="secno">3.3. </span><span class="content">Sensitive information disclosure</span><a class="self-link" href="#hl-sensitive-information"></a></h3>
+   <p>Contributes to <a data-link-type="dfn" href="#correlation" id="ref-for-correlation②">correlation</a>, <a data-link-type="dfn" href="#identification" id="ref-for-identification②">identification</a>, <a data-link-type="dfn" href="#secondary-use" id="ref-for-secondary-use">secondary use</a>, and <a data-link-type="dfn" href="#disclosure" id="ref-for-disclosure">disclosure</a>.</p>
+   <p>Many pieces of information about a user could cause privacy harms if disclosed.
+For example:</p>
+   <ul>
+    <li data-md>
+     <p>The user’s location.</p>
+    <li data-md>
+     <p>Video or audio from the user’s camera or microphone.</p>
+    <li data-md>
+     <p>The content of certain files on the user’s filesystem.</p>
+    <li data-md>
+     <p>Financial data.</p>
+    <li data-md>
+     <p>Contacts.</p>
+    <li data-md>
+     <p>Calendar entries.</p>
+    <li data-md>
+     <p>...</p>
+   </ul>
+   <h3 class="heading settled" data-level="3.4" id="hl-intrusion"><span class="secno">3.4. </span><span class="content">Intrusive behavior</span><a class="self-link" href="#hl-intrusion"></a></h3>
+   <p>See <a data-link-type="dfn" href="#intrusion" id="ref-for-intrusion">intrusion</a>.</p>
+   <p>Privacy harms don’t always come from a site learning things. For example it is
+intrusive for a site to</p>
+   <ul>
+    <li data-md>
+     <p>Display messages or notifications,</p>
+    <li data-md>
+     <p>Play sounds,</p>
+    <li data-md>
+     <p>Occupy the full screen,</p>
+    <li data-md>
+     <p>etc.</p>
+   </ul>
+   <p>if the user doesn’t intend for it to do so.</p>
+   <h3 class="heading settled" data-level="3.5" id="hl-capabilities"><span class="secno">3.5. </span><span class="content">Powerful capabilities</span><a class="self-link" href="#hl-capabilities"></a></h3>
+   <p>Contributes to <a data-link-type="dfn" href="#misattribution" id="ref-for-misattribution">misattribution</a>.</p>
+   <p>For example, a site that sends SMS without the user’s intent could cause them to
+be blamed for things they didn’t intend.</p>
    <h2 class="heading settled" data-level="4" id="model"><span class="secno">4. </span><span class="content">Threat Model</span><a class="self-link" href="#model"></a></h2>
    <p>This table summarizes which capabilities should allow attackers to achieve which
 goals and, conversely, which goals should be frustrated for attackers even when
@@ -1979,16 +2057,37 @@ that information could flow between sites without compromising user privacy.</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
    <li><a href="#attacker">attacker</a><span>, in §2</span>
+   <li><a href="#correlation">Correlation</a><span>, in §3</span>
+   <li><a href="#disclosure">Disclosure</a><span>, in §3</span>
+   <li><a href="#exclusion">Exclusion</a><span>, in §3</span>
    <li><a href="#first-party">first party</a><span>, in §2</span>
    <li><a href="#global-identifier">global identifier</a><span>, in §2</span>
+   <li><a href="#identification">Identification</a><span>, in §3</span>
+   <li><a href="#intrusion">Intrusion</a><span>, in §3</span>
+   <li><a href="#misattribution">Misattribution</a><span>, in §3</span>
    <li><a href="#party">party</a><span>, in §2</span>
    <li><a href="#publisher">publisher</a><span>, in §2</span>
+   <li><a href="#secondary-use">Secondary Use</a><span>, in §3</span>
    <li><a href="#site">site</a><span>, in §2</span>
+   <li><a href="#stored-data-compromise">Stored Data Compromise</a><span>, in §3</span>
+   <li><a href="#surveillance">Surveillance</a><span>, in §3</span>
    <li><a href="#third-party">third party</a><span>, in §2</span>
    <li><a href="#tracker">tracker</a><span>, in §2</span>
    <li><a href="#user">user</a><span>, in §2</span>
    <li><a href="#user-id">user ID</a><span>, in §2</span>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-dfn-browser-fingerprinting">
+   <a href="https://w3c.github.io/fingerprinting-guidance/#dfn-browser-fingerprinting">https://w3c.github.io/fingerprinting-guidance/#dfn-browser-fingerprinting</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dfn-browser-fingerprinting">3.1. Unwanted same-site recognition</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-localstorage">
+   <a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-localstorage">3.1. Unwanted same-site recognition</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-origin">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin">https://html.spec.whatwg.org/multipage/origin.html#concept-origin</a><b>Referenced in:</b>
    <ul>
@@ -2007,6 +2106,12 @@ that information could flow between sites without compromising user privacy.</p>
     <li><a href="#ref-for-top-level-browsing-context">2. Terminology</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-windoworworkerglobalscope-indexeddb">
+   <a href="https://w3c.github.io/IndexedDB/#dom-windoworworkerglobalscope-indexeddb">https://w3c.github.io/IndexedDB/#dom-windoworworkerglobalscope-indexeddb</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-windoworworkerglobalscope-indexeddb">3.1. Unwanted same-site recognition</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-list-format">
    <a href="https://publicsuffix.org/list/#list-format">https://publicsuffix.org/list/#list-format</a><b>Referenced in:</b>
    <ul>
@@ -2019,14 +2124,31 @@ that information could flow between sites without compromising user privacy.</p>
     <li><a href="#ref-for-section-4.1.2.6">5.2. Run Javascript in a first-party context</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-cachestorage">
+   <a href="https://w3c.github.io/ServiceWorker/#cachestorage">https://w3c.github.io/ServiceWorker/#cachestorage</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-cachestorage">3.1. Unwanted same-site recognition</a>
+   </ul>
+  </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
+    <a data-link-type="biblio">[fingerprinting-guidance]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-dfn-browser-fingerprinting" style="color:initial">browser fingerprinting</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="term-for-dom-localstorage" style="color:initial">localStorage</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin" style="color:initial">origin</span>
      <li><span class="dfn-paneled" id="term-for-same-site" style="color:initial">same site</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[IndexedDB-2]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-dom-windoworworkerglobalscope-indexeddb" style="color:initial">indexedDB</span>
     </ul>
    <li>
     <a data-link-type="biblio">[PSL]</a> defines the following terms:
@@ -2034,35 +2156,47 @@ that information could flow between sites without compromising user privacy.</p>
      <li><span class="dfn-paneled" id="term-for-list-format" style="color:initial">registrable domain</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[rfc6265]</a> defines the following terms:
+    <a data-link-type="biblio">[RFC6265]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-section-4.1.2.6" style="color:initial">httponly</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[service-workers-1]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-cachestorage" style="color:initial">CacheStorage</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-fingerprinting-guidance">[FINGERPRINTING-GUIDANCE]
+   <dd>Nick Doty. <a href="https://www.w3.org/TR/fingerprinting-guidance/">Mitigating Browser Fingerprinting in Web Specifications</a>. 28 March 2019. NOTE. URL: <a href="https://www.w3.org/TR/fingerprinting-guidance/">https://www.w3.org/TR/fingerprinting-guidance/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-indexeddb-2">[IndexedDB-2]
+   <dd>Ali Alabbas; Joshua Bell. <a href="https://www.w3.org/TR/IndexedDB-2/">Indexed Database API 2.0</a>. 30 January 2018. REC. URL: <a href="https://www.w3.org/TR/IndexedDB-2/">https://www.w3.org/TR/IndexedDB-2/</a>
    <dt id="biblio-psl">[PSL]
    <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc6265">[RFC6265]
    <dd>A. Barth. <a href="https://httpwg.org/specs/rfc6265.html">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc6265.html">https://httpwg.org/specs/rfc6265.html</a>
+   <dt id="biblio-service-workers-1">[SERVICE-WORKERS-1]
+   <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/">Service Workers 1</a>. 19 November 2019. CR. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-psl-problems">[PSL-PROBLEMS]
    <dd>Ryan Sleevi. <a href="https://github.com/sleevi/psl-problems">Public Suffix List Problems</a>. URL: <a href="https://github.com/sleevi/psl-problems">https://github.com/sleevi/psl-problems</a>
+   <dt id="biblio-rfc6973">[RFC6973]
+   <dd>A. Cooper; et al. <a href="https://tools.ietf.org/html/rfc6973">Privacy Considerations for Internet Protocols</a>. July 2013. Informational. URL: <a href="https://tools.ietf.org/html/rfc6973">https://tools.ietf.org/html/rfc6973</a>
    <dt id="biblio-tracking-dnt">[TRACKING-DNT]
    <dd>Roy Fielding; David Singer. <a href="https://www.w3.org/TR/tracking-dnt/">Tracking Preference Expression (DNT)</a>. 17 January 2019. NOTE. URL: <a href="https://www.w3.org/TR/tracking-dnt/">https://www.w3.org/TR/tracking-dnt/</a>
+   <dt id="biblio-what-does-private-browsing-do">[WHAT-DOES-PRIVATE-BROWSING-DO]
+   <dd>Martin Shelton. <a href="https://medium.com/@mshelton/what-does-private-browsing-mode-do-adfe5a70a8b1">What Does Private Browsing Mode Do?</a>. URL: <a href="https://medium.com/@mshelton/what-does-private-browsing-mode-do-adfe5a70a8b1">https://medium.com/@mshelton/what-does-private-browsing-mode-do-adfe5a70a8b1</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> This section is not complete. It lists a lot of potential privacy
-threats, but needs editing to pick which kinds of threats belong in this threat
-model and to unify the multiple lists of suggestions.<a href="#issue-05a52c93"> ↵ </a></div>
    <div class="issue"> Should we mark goals attackers can currently achieve, which we want to
 remove, differently from goals attackers already can’t achieve?<a href="#issue-eb037c92"> ↵ </a></div>
   </div>
@@ -2140,6 +2274,53 @@ remove, differently from goals attackers already can’t achieve?<a href="#issue
    <ul>
     <li><a href="#ref-for-tracker">6.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a>
     <li><a href="#ref-for-tracker①">6.2.3. Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="surveillance">
+   <b><a href="#surveillance">#surveillance</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-surveillance">3.1. Unwanted same-site recognition</a>
+    <li><a href="#ref-for-surveillance①">3.2. Unwanted cross-site recognition</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="intrusion">
+   <b><a href="#intrusion">#intrusion</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-intrusion">3.4. Intrusive behavior</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="misattribution">
+   <b><a href="#misattribution">#misattribution</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-misattribution">3.5. Powerful capabilities</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="correlation">
+   <b><a href="#correlation">#correlation</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-correlation">3.1. Unwanted same-site recognition</a>
+    <li><a href="#ref-for-correlation①">3.2. Unwanted cross-site recognition</a>
+    <li><a href="#ref-for-correlation②">3.3. Sensitive information disclosure</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="identification">
+   <b><a href="#identification">#identification</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-identification">3.1. Unwanted same-site recognition</a>
+    <li><a href="#ref-for-identification①">3.2. Unwanted cross-site recognition</a>
+    <li><a href="#ref-for-identification②">3.3. Sensitive information disclosure</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="secondary-use">
+   <b><a href="#secondary-use">#secondary-use</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-secondary-use">3.3. Sensitive information disclosure</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="disclosure">
+   <b><a href="#disclosure">#disclosure</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-disclosure">3.3. Sensitive information disclosure</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
