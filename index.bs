@@ -265,6 +265,15 @@ For example:
 * Calendar entries.
 * ...
 
+A particular piece of information may have different sensitivity for different
+users. Language preferences, for example, might typically seem innocent, but
+also can be an indicator of belonging to a minority ethnicity. Precise location
+information can be extremely sensitive (because it's identifying, because it
+allows for in-person intrusions, because it can reveal detailed information
+about a person's life) but it might also be public and not sensitive at all, or
+it might be low-enough granularity that it is much less sensitive for many
+users.
+
 ## Intrusive behavior ## {#hl-intrusion}
 
 See [=intrusion=].
@@ -307,10 +316,10 @@ path: xsite-tracking-model.bsinc
 
 ## Sensitive-information ## {#model-sensitive-information}
 
-Attackers can only get access to sensitive information if they can convince the
-user to express their intent that the attacker get access to this information at
-the time the attacker gets access to it. User agents vary in how they gather
-this expression of intent.
+Attackers should only be able to get access to sensitive information from a
+[=user agent=] if they can convince the user to express their intent that the
+attacker get access to this information at the time the attacker gets access to
+it. User agents vary in how they gather this expression of intent.
 
 That a user intends an attacker to get a piece of information at one time, for
 example their location or their contact book, may be, but is not necessarily
@@ -318,6 +327,11 @@ evidence that the user intends to give out the same piece of information at
 a later time. There is not consensus about how long it's reasonable to infer
 continued intent, but there is consensus that intent doesn't last for years
 without interaction.
+
+This threat model defines a kind of information as sensitive if we plan to
+evolve the web platform to block access to it by default. Other information is
+described as benign even if some users in some situations would find it
+sensitive.
 
 There is consensus that some kinds of information are sensitive:
 
