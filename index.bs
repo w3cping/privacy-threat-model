@@ -328,19 +328,21 @@ a later time. There is not consensus about how long it's reasonable to infer
 continued intent, but there is consensus that intent doesn't last for years
 without interaction.
 
-This threat model defines a kind of information as sensitive if we plan to
-evolve the web platform to block access to it by default. Other information is
-described as benign even if some users in some situations would find it
-sensitive.
+This threat model defines a kind of information as <dfn>restricted sensitive
+information</dfn> if we plan to evolve the web platform to block access to it by
+default. Other information is described as "not [=restricted sensitive
+information=]" even if some users in some situations would find it sensitive.
 
-There is consensus that some kinds of information are sensitive:
+There is consensus that some kinds of information are [=restricted sensitive
+information=]:
 
 * Location
 * Disability status
 * Microphone input
 * Etc.
 
-There is consensus that some other kinds of information are not sensitive:
+There is consensus that some other kinds of information are not [=restricted
+sensitive information=]:
 
 * User agent
 * Language
