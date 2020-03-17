@@ -247,7 +247,7 @@ usually more significantly than [[#hl-recognition-same-site]].
 
 This occurs if a site can determine with high probability that a visit to that
 site comes from the same user as another visit to a *different* site.  This
-threat is discussed in [[#model-anti-tracking]].
+threat is discussed in [[#model-cross-site-recognition]].
 
 ## Sensitive information disclosure ## {#hl-sensitive-information}
 
@@ -264,6 +264,29 @@ For example:
 * Contacts.
 * Calendar entries.
 * ...
+
+A particular piece of information may have different sensitivity for different
+users. Language preferences, for example, might typically seem innocent, but
+also can be an indicator of belonging to a minority ethnicity. Precise location
+information can be extremely sensitive (because it's identifying, because it
+allows for in-person intrusions, because it can reveal detailed information
+about a person's life) but it might also be public and not sensitive at all, or
+it might be low-enough granularity that it is much less sensitive for many
+users.
+
+When considering whether a class of information is likely to be sensitive to
+users, consider at least these factors:
+
+* whether it serves as a persistent identifier (see severity in Mitigating
+    browser fingerprinting);
+* whether it discloses substantial (including intimate details or inferences)
+    information about the user or other users;
+* whether it can be revoked (as in determining whether a permission is
+    necessary);
+* whether it enables other threats, like intrusion.
+
+Issue(16): This description of what makes information sensitive still needs to
+be refined.
 
 ## Intrusive behavior ## {#hl-intrusion}
 
@@ -286,9 +309,75 @@ Contributes to [=misattribution=].
 For example, a site that sends SMS without the user's intent could cause them to
 be blamed for things they didn't intend.
 
+# Threat Model # {#model}
+
+For each of the <a href="#high-level-threats">high-level threats</a>, we
+describe a threat model: a description of what goals attackers with various
+capabilities should or should not be able to achieve. For simple threats, a
+model can be expressed in prose, while complex threat models use a grid to
+express the web platform's target guarantees.
+
+<span style="color:green">✘</span> indicates that the goal should be frustrated,
+while <span style="color:red">✓</span> indicates that the attacker can achieve
+their goal.
+
+Issue: Should we mark goals attackers can currently achieve, which we want to
+remove, differently from goals attackers already can't achieve?
+
 <pre class="include">
-path: model.bsinc
+path: xsite-tracking-model.bsinc
 </pre>
+
+## Sensitive-information ## {#model-sensitive-information}
+
+Attackers should only be able to get access to sensitive information from a
+[=user agent=] if the user expresses their intent that the attacker get access
+to this information at the time the attacker gets access to it. User agents vary
+in how they gather this expression of intent.
+
+That a user intends an attacker to get a piece of information at one time, for
+example their location or their contact book, may be, but is not necessarily
+evidence that the user intends to give out the same piece of information at
+a later time. There is not consensus about how long it's reasonable to infer
+continued intent, but there is consensus that intent doesn't last for years
+without interaction.
+
+Issue(19): Add more information about local attackers and confused users and how
+browsers can mitigate.
+
+This threat model defines a kind of information as <dfn>restricted sensitive
+information</dfn> if the web platform currently blocks access to it by default
+or if we plan to evolve the web platform to block access to it by default
+because of the potential privacy harms from disclosure of that kind of
+information.
+
+Other information is described as "not [=restricted sensitive information=]"
+even if some users in some situations would find it sensitive. Information in
+this category may have a lower risk of privacy harm to users or may not
+currently be restricted because of incompatibility with functionality of the
+Web. These categories are not static and it may become feasible to block access
+by default to more kinds of information as the platform develops.
+
+There is consensus that some kinds of information are [=restricted sensitive
+information=]:
+
+* Location
+* Disability status
+* Microphone input
+* Etc.
+
+There is consensus that some other kinds of information are not [=restricted
+sensitive information=]:
+
+* User agent
+* Language
+* A user's <a descriptor for="@media" lt="prefers-reduced-motion">preference for
+    less motion</a>.
+* Etc.
+
+There is not consensus about the sensitivity of all kinds of information:
+
+* TODO: examples?
 
 <pre class="include">
 path: capabilities.bsinc
