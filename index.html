@@ -1221,9 +1221,9 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 70c86369151f7b7b97b78c0f664dba09a4024ca2" name="generator">
+  <meta content="Bikeshed version 1aa55c4b12206b757a7f28d827148354589319fb" name="generator">
   <link href="https://w3cping.github.io/privacy-threat-model" rel="canonical">
-  <meta content="7ccc40fd6e6a4551b1e8ff9da0cb5294ae85dc85" name="document-revision">
+  <meta content="88e17e17fa9b8f8589b30cd61eceaaf2ffe1f690" name="document-revision">
 <style>
 .threatmodel tr.goals th {
   padding: 1ex;
@@ -1430,7 +1430,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Target Privacy Threat Model</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-03-09">9 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-03-17">17 March 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1468,7 +1468,7 @@ pre .property::before, pre .property::after {
     latest revision of this technical report can be found in the <a href="https://www.w3.org/TR/"><abbr title="World Wide Web
     Consortium">W3C</abbr> technical reports index</a>.</em> </p>
    <p> This document was published by the <a href="https://www.w3.org/2019/privacy/">Privacy Interest Group</a> as an
-    Editor’s Draft. This document is intended to become a W3C Recommendation.
+    Editor’s Draft.
     Publication as an Editor’s Draft does not imply endorsement by the <abbr title="World Wide Web Consortium">W3C</abbr> Membership. This is a
     draft document and may be updated, replaced or obsoleted by other documents
     at any time. It is inappropriate to cite this document as other than work in
@@ -1482,10 +1482,7 @@ pre .property::before, pre .property::after {
     Web Consortium">W3C</abbr> Patent Policy</a>. The <abbr title="World Wide Web
     Consortium">W3C</abbr> maintains a <a href="https://www.w3.org/2004/01/pp-impl/52497/status" rel="disclosure">public list of any patent disclosures</a> made in
     connection with the deliverables of the group; that page also includes
-    instructions for disclosing a patent. An individual who has actual knowledge
-    of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential
-    Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6
-    of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>. </p>
+    instructions for disclosing a patent. </p>
    <p> This document is governed by the <a href="https://www.w3.org/2019/Process-20190301/" id="w3c_process_revision">1 March 2019 W3C Process
     Document</a>. </p>
   </div>
@@ -1507,7 +1504,8 @@ pre .property::before, pre .property::after {
     <li>
      <a href="#model"><span class="secno">4</span> <span class="content">Threat Model</span></a>
      <ol class="toc">
-      <li><a href="#model-anti-tracking"><span class="secno">4.1</span> <span class="content">Anti-tracking</span></a>
+      <li><a href="#model-cross-site-recognition"><span class="secno">4.1</span> <span class="content">Cross-site recognition</span></a>
+      <li><a href="#model-sensitive-information"><span class="secno">4.2</span> <span class="content">Sensitive-information</span></a>
      </ol>
     <li>
      <a href="#capabilities"><span class="secno">5</span> <span class="content">Attacker Capabilities</span></a>
@@ -1705,7 +1703,7 @@ assistive device?</p>
 usually more significantly than <a href="#hl-recognition-same-site">§ 3.1 Unwanted same-site recognition</a>.</p>
    <p>This occurs if a site can determine with high probability that a visit to that
 site comes from the same user as another visit to a <em>different</em> site.  This
-threat is discussed in <a href="#model-anti-tracking">§ 4.1 Anti-tracking</a>.</p>
+threat is discussed in <a href="#model-cross-site-recognition">§ 4.1 Cross-site recognition</a>.</p>
    <h3 class="heading settled" data-level="3.3" id="hl-sensitive-information"><span class="secno">3.3. </span><span class="content">Sensitive information disclosure</span><a class="self-link" href="#hl-sensitive-information"></a></h3>
    <p>Contributes to <a data-link-type="dfn" href="#correlation" id="ref-for-correlation②">correlation</a>, <a data-link-type="dfn" href="#identification" id="ref-for-identification②">identification</a>, <a data-link-type="dfn" href="#secondary-use" id="ref-for-secondary-use">secondary use</a>, and <a data-link-type="dfn" href="#disclosure" id="ref-for-disclosure">disclosure</a>.</p>
    <p>Many pieces of information about a user could cause privacy harms if disclosed.
@@ -1726,6 +1724,31 @@ For example:</p>
     <li data-md>
      <p>...</p>
    </ul>
+   <p>A particular piece of information may have different sensitivity for different
+users. Language preferences, for example, might typically seem innocent, but
+also can be an indicator of belonging to a minority ethnicity. Precise location
+information can be extremely sensitive (because it’s identifying, because it
+allows for in-person intrusions, because it can reveal detailed information
+about a person’s life) but it might also be public and not sensitive at all, or
+it might be low-enough granularity that it is much less sensitive for many
+users.</p>
+   <p>When considering whether a class of information is likely to be sensitive to
+users, consider at least these factors:</p>
+   <ul>
+    <li data-md>
+     <p>whether it serves as a persistent identifier (see severity in Mitigating
+browser fingerprinting);</p>
+    <li data-md>
+     <p>whether it discloses substantial (including intimate details or inferences)
+information about the user or other users;</p>
+    <li data-md>
+     <p>whether it can be revoked (as in determining whether a permission is
+necessary);</p>
+    <li data-md>
+     <p>whether it enables other threats, like intrusion.</p>
+   </ul>
+   <p class="issue" id="issue-71c59b1e"><a class="self-link" href="#issue-71c59b1e"></a> This description of what makes information sensitive still needs to
+be refined. <a href="https://github.com/w3cping/privacy-threat-model/issues/16">&lt;https://github.com/w3cping/privacy-threat-model/issues/16></a></p>
    <h3 class="heading settled" data-level="3.4" id="hl-intrusion"><span class="secno">3.4. </span><span class="content">Intrusive behavior</span><a class="self-link" href="#hl-intrusion"></a></h3>
    <p>See <a data-link-type="dfn" href="#intrusion" id="ref-for-intrusion">intrusion</a>.</p>
    <p>Privacy harms don’t always come from a site learning things. For example it is
@@ -1746,15 +1769,17 @@ intrusive for a site to</p>
    <p>For example, a site that sends SMS without the user’s intent could cause them to
 be blamed for things they didn’t intend.</p>
    <h2 class="heading settled" data-level="4" id="model"><span class="secno">4. </span><span class="content">Threat Model</span><a class="self-link" href="#model"></a></h2>
-   <p>This table summarizes which capabilities should allow attackers to achieve which
-goals and, conversely, which goals should be frustrated for attackers even when
-they have certain capabilities.</p>
+   <p>For each of the <a href="#high-level-threats">high-level threats</a>, we
+describe a threat model: a description of what goals attackers with various
+capabilities should or should not be able to achieve. For simple threats, a
+model can be expressed in prose, while complex threat models use a grid to
+express the web platform’s target guarantees.</p>
    <p><span style="color:green">✘</span> indicates that the goal should be frustrated,
 while <span style="color:red">✓</span> indicates that the attacker can achieve
 their goal.</p>
    <p class="issue" id="issue-eb037c92"><a class="self-link" href="#issue-eb037c92"></a> Should we mark goals attackers can currently achieve, which we want to
 remove, differently from goals attackers already can’t achieve?</p>
-   <h3 class="heading settled" data-level="4.1" id="model-anti-tracking"><span class="secno">4.1. </span><span class="content">Anti-tracking</span><a class="self-link" href="#model-anti-tracking"></a></h3>
+   <h3 class="heading settled" data-level="4.1" id="model-cross-site-recognition"><span class="secno">4.1. </span><span class="content">Cross-site recognition</span><a class="self-link" href="#model-cross-site-recognition"></a></h3>
     TODO 
    <table class="threatmodel">
     <tbody>
@@ -1834,6 +1859,59 @@ remove, differently from goals attackers already can’t achieve?</p>
       <td data-goal="prob-transfer-userid-no-nav"> <span style="color:red">✓</span> 
       <td data-goal="prob-transfer-userid"> <span style="color:red">✓</span> 
    </table>
+   <h3 class="heading settled" data-level="4.2" id="model-sensitive-information"><span class="secno">4.2. </span><span class="content">Sensitive-information</span><a class="self-link" href="#model-sensitive-information"></a></h3>
+   <p>Attackers should only be able to get access to sensitive information from a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent">user agent</a> if the user expresses their intent that the attacker get access
+to this information at the time the attacker gets access to it. User agents vary
+in how they gather this expression of intent.</p>
+   <p>That a user intends an attacker to get a piece of information at one time, for
+example their location or their contact book, may be, but is not necessarily
+evidence that the user intends to give out the same piece of information at
+a later time. There is not consensus about how long it’s reasonable to infer
+continued intent, but there is consensus that intent doesn’t last for years
+without interaction.</p>
+   <p class="issue" id="issue-db535e06"><a class="self-link" href="#issue-db535e06"></a> Add more information about local attackers and confused users and how
+browsers can mitigate. <a href="https://github.com/w3cping/privacy-threat-model/issues/19">&lt;https://github.com/w3cping/privacy-threat-model/issues/19></a></p>
+   <p>This threat model defines a kind of information as <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="restricted sensitive information" data-noexport id="restricted-sensitive-information">restricted sensitive
+information</dfn> if the web platform currently blocks access to it by default
+or if we plan to evolve the web platform to block access to it by default
+because of the potential privacy harms from disclosure of that kind of
+information.</p>
+   <p>Other information is described as "not <a data-link-type="dfn" href="#restricted-sensitive-information" id="ref-for-restricted-sensitive-information">restricted sensitive information</a>"
+even if some users in some situations would find it sensitive. Information in
+this category may have a lower risk of privacy harm to users or may not
+currently be restricted because of incompatibility with functionality of the
+Web. These categories are not static and it may become feasible to block access
+by default to more kinds of information as the platform develops.</p>
+   <p>There is consensus that some kinds of information are <a data-link-type="dfn" href="#restricted-sensitive-information" id="ref-for-restricted-sensitive-information①">restricted sensitive
+information</a>:</p>
+   <ul>
+    <li data-md>
+     <p>Location</p>
+    <li data-md>
+     <p>Disability status</p>
+    <li data-md>
+     <p>Microphone input</p>
+    <li data-md>
+     <p>Etc.</p>
+   </ul>
+   <p>There is consensus that some other kinds of information are not <a data-link-type="dfn" href="#restricted-sensitive-information" id="ref-for-restricted-sensitive-information②">restricted
+sensitive information</a>:</p>
+   <ul>
+    <li data-md>
+     <p>User agent</p>
+    <li data-md>
+     <p>Language</p>
+    <li data-md>
+     <p>A user’s <a class="css" data-link-type="descriptor" href="https://drafts.csswg.org/mediaqueries-5/#descdef-media-prefers-reduced-motion" id="ref-for-descdef-media-prefers-reduced-motion">preference for
+less motion</a>.</p>
+    <li data-md>
+     <p>Etc.</p>
+   </ul>
+   <p>There is not consensus about the sensitivity of all kinds of information:</p>
+   <ul>
+    <li data-md>
+     <p>TODO: examples?</p>
+   </ul>
    <h2 class="heading settled" data-level="5" id="capabilities"><span class="secno">5. </span><span class="content">Attacker Capabilities</span><a class="self-link" href="#capabilities"></a></h2>
    <p>These are things some attackers can do. The attackers can use them to achieve
 their <a href="#goals">goals</a>. All attackers are assumed to be able to buy
@@ -2067,6 +2145,7 @@ that information could flow between sites without compromising user privacy.</p>
    <li><a href="#misattribution">Misattribution</a><span>, in §3</span>
    <li><a href="#party">party</a><span>, in §2</span>
    <li><a href="#publisher">publisher</a><span>, in §2</span>
+   <li><a href="#restricted-sensitive-information">restricted sensitive information</a><span>, in §4.2</span>
    <li><a href="#secondary-use">Secondary Use</a><span>, in §3</span>
    <li><a href="#site">site</a><span>, in §2</span>
    <li><a href="#stored-data-compromise">Stored Data Compromise</a><span>, in §3</span>
@@ -2112,6 +2191,18 @@ that information could flow between sites without compromising user privacy.</p>
     <li><a href="#ref-for-dom-windoworworkerglobalscope-indexeddb">3.1. Unwanted same-site recognition</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-user-agent">
+   <a href="https://infra.spec.whatwg.org/#user-agent">https://infra.spec.whatwg.org/#user-agent</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-user-agent">4.2. Sensitive-information</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-descdef-media-prefers-reduced-motion">
+   <a href="https://drafts.csswg.org/mediaqueries-5/#descdef-media-prefers-reduced-motion">https://drafts.csswg.org/mediaqueries-5/#descdef-media-prefers-reduced-motion</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-descdef-media-prefers-reduced-motion">4.2. Sensitive-information</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-list-format">
    <a href="https://publicsuffix.org/list/#list-format">https://publicsuffix.org/list/#list-format</a><b>Referenced in:</b>
    <ul>
@@ -2151,6 +2242,16 @@ that information could flow between sites without compromising user privacy.</p>
      <li><span class="dfn-paneled" id="term-for-dom-windoworworkerglobalscope-indexeddb" style="color:initial">indexedDB</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[INFRA]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-user-agent" style="color:initial">user agent</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[mediaqueries-5]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-descdef-media-prefers-reduced-motion" style="color:initial">prefers-reduced-motion</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[PSL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-list-format" style="color:initial">registrable domain</span>
@@ -2175,6 +2276,10 @@ that information could flow between sites without compromising user privacy.</p>
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-indexeddb-2">[IndexedDB-2]
    <dd>Ali Alabbas; Joshua Bell. <a href="https://www.w3.org/TR/IndexedDB-2/">Indexed Database API 2.0</a>. 30 January 2018. REC. URL: <a href="https://www.w3.org/TR/IndexedDB-2/">https://www.w3.org/TR/IndexedDB-2/</a>
+   <dt id="biblio-infra">[INFRA]
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dt id="biblio-mediaqueries-5">[MEDIAQUERIES-5]
+   <dd>Dean Jackson; Florian Rivoal; Tab Atkins Jr.. <a href="https://www.w3.org/TR/mediaqueries-5/">Media Queries Level 5</a>. 3 March 2020. WD. URL: <a href="https://www.w3.org/TR/mediaqueries-5/">https://www.w3.org/TR/mediaqueries-5/</a>
    <dt id="biblio-psl">[PSL]
    <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
    <dt id="biblio-rfc2119">[RFC2119]
@@ -2197,8 +2302,12 @@ that information could flow between sites without compromising user privacy.</p>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
+   <div class="issue"> This description of what makes information sensitive still needs to
+be refined. <a href="https://github.com/w3cping/privacy-threat-model/issues/16">&lt;https://github.com/w3cping/privacy-threat-model/issues/16></a><a href="#issue-71c59b1e"> ↵ </a></div>
    <div class="issue"> Should we mark goals attackers can currently achieve, which we want to
 remove, differently from goals attackers already can’t achieve?<a href="#issue-eb037c92"> ↵ </a></div>
+   <div class="issue"> Add more information about local attackers and confused users and how
+browsers can mitigate. <a href="https://github.com/w3cping/privacy-threat-model/issues/19">&lt;https://github.com/w3cping/privacy-threat-model/issues/19></a><a href="#issue-db535e06"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="site">
    <b><a href="#site">#site</a></b><b>Referenced in:</b>
@@ -2239,7 +2348,7 @@ remove, differently from goals attackers already can’t achieve?<a href="#issue
    <b><a href="#user-id">#user-id</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-id">2. Terminology</a>
-    <li><a href="#ref-for-user-id①">4.1. Anti-tracking</a>
+    <li><a href="#ref-for-user-id①">4.1. Cross-site recognition</a>
     <li><a href="#ref-for-user-id②">5.3. Modify server processing</a>
     <li><a href="#ref-for-user-id③">6.2.1. Transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-user-id④">(2)</a>
     <li><a href="#ref-for-user-id⑤">6.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a> <a href="#ref-for-user-id⑥">(2)</a>
@@ -2321,6 +2430,12 @@ remove, differently from goals attackers already can’t achieve?<a href="#issue
    <b><a href="#disclosure">#disclosure</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-disclosure">3.3. Sensitive information disclosure</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="restricted-sensitive-information">
+   <b><a href="#restricted-sensitive-information">#restricted-sensitive-information</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-restricted-sensitive-information">4.2. Sensitive-information</a> <a href="#ref-for-restricted-sensitive-information①">(2)</a> <a href="#ref-for-restricted-sensitive-information②">(3)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
