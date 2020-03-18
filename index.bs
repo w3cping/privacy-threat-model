@@ -393,15 +393,14 @@ path: essential.bsinc
 
 # Acknowledgements # {#acknowledgements}
 
-As far as I know, Safari did the first work to prove that a more
-privacy-preserving web was possible, by blocking third-party cookies by default
-and then shipping [ITP
+Safari did the first work to prove that a more privacy-preserving web was
+possible, by blocking third-party cookies by default and then shipping [ITP
 1.0](https://webkit.org/blog/7675/intelligent-tracking-prevention/), without
 breaking the world. They eventually published their [policy for Tracking
-Prevention](https://webkit.org/tracking-prevention-policy/),
-which heavily influenced this document.
+Prevention](https://webkit.org/tracking-prevention-policy/), which heavily
+influenced this document.
 
-I believe Mozilla wrote the first concrete [anti-tracking
+Mozilla wrote the first concrete [anti-tracking
 policy](https://wiki.mozilla.org/Security/Anti_tracking_policy), which inspired
 Safari's policy.
 
