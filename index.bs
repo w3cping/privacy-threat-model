@@ -267,7 +267,7 @@ For example:
 
 A particular piece of information may have different sensitivity for different
 users. Language preferences, for example, might typically seem innocent, but
-also can be an indicator of belonging to a minority ethnicity. Precise location
+also can be an indicator of belonging to an ethnic minority. Precise location
 information can be extremely sensitive (because it's identifying, because it
 allows for in-person intrusions, because it can reveal detailed information
 about a person's life) but it might also be public and not sensitive at all, or
