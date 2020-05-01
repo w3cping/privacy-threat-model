@@ -27,3 +27,33 @@ normal logic mapping a path to content.
 
 Servers can keep logs of requests. The attacker may be able to convince some
 server operators to give them these logs or let them run queries over the logs.
+
+## Convince the user to type an identifier ## {#cap-type-identifier}
+
+The attacker can convince a user to type their email address, name, zip code,
+etc. into two publishers' sites.
+
+## Convince the user to open the same device in two cross-site tabs ## {#cap-same-device-same-time}
+
+The attacker can convince a user to open the same device on two publishers'
+sites that are both open at the same time in different tabs or windows.
+
+## Convince the user to open the same read+write device in two different sites ## {#cap-same-rw-device}
+
+A read+write device is something like a native filesystem file or directory, or
+a bluetooth or USB device that can be configured to save data. The two sites
+need to be given access to the same device, but they don't need to both be open
+at the same time.
+
+## Have two sites open when a browser-wide event happens ## {#cap-open-for-browser-event}
+
+A browser-wide event is something that happens to the browser as a whole instead
+of to an individual site or web page. For example, the user going idle, sensor
+data changing, or the device's time zone changing, would affect all tabs at the
+same time.
+
+## Have two sites visible when a browser-wide event happens ## {#cap-visible-for-browser-event}
+
+Unlike [#cap-open-for-browser-event], this capability requires both sites to be
+visible (probably in two separate browser windows) at the same time during the
+event.

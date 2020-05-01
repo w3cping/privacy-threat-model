@@ -67,7 +67,7 @@
     <span style="color:green">✘</span>
   </td>
 </tr>
-<tr>TODO
+<tr>
   <th>[[#cap-first-party-js]] or [[#cap-run-on-server]] on the source site and [[#cap-run-on-server]] on the target publisher</th>
   <td data-goal="transfer-userid">
     <span style="color:green">✘</span>
@@ -103,3 +103,80 @@
     <span style="color:red">✓</span>
   </td>
 </tr></table>
+
+Further cross-site recognition is available by combining capabilities with the
+ability to [[#cap-first-party-js]] (or [[#cap-run-on-server]] to add
+attacker-controlled javascript):
+
+<table class="threatmodel">
+<tr class="goals">
+  <td></td>
+  <th>[[#goal-prob-transfer-userid-no-nav]]</th>
+</tr>
+<tr>
+  <th>[[#cap-type-identifier]]</th>
+  <td data-goal="prob-transfer-userid-no-nav">
+      <details>
+        <summary style="color:red">✓</summary>
+        The tracker gets a report of the identifiers typed in both publisher
+        sites, along with each publisher's [=user id=]. If they're equal, the
+        [=user ids=] probably refer to the same user. The probability depends on
+        the type of identifier: email addresses or credit card numbers are very
+        high probability. Names or dates of birth are lower probability unless
+        combined with other information like a zip code.
+    </details>
+  </td>
+</tr>
+<tr>
+  <th>[[#cap-same-device-same-time]]</th>
+  <td data-goal="prob-transfer-userid-no-nav">
+      <details>
+        <summary style="color:red">✓</summary>
+        The tracker reads the two devices, and if they give the same output at
+        approximately the same time, the user is probably the same. For devices
+        like cameras and microphones, detection is likely to be very accurate.
+        Others, like ambient light, might only give a few bits per sample, and
+        so need a long period of overlap in order to provide a good correlation.
+
+        For some devices, this transfer can be mitigated by turning off input
+        when the site isn't visible or isn't focused, but user expectations
+        limit where that mitigation is applicable.
+    </details>
+  </td>
+</tr>
+<tr>
+  <th>[[#cap-same-rw-device]]</th>
+  <td data-goal="prob-transfer-userid-no-nav">
+      <details>
+        <summary style="color:red">✓</summary>
+        The tracker writes identifying content to the device and then reads it
+        back when the other site is opened. This is visible to varying degrees
+        depending on the device: an individual native file or a Bluetooth or USB
+        device that isn't designed to cooperate with this sort of tracking, is
+        likely to break in obvious ways when the tracker tries to write an
+        identifier. A native directory, on the other hand, has many available
+        filenames that could hold identifying information without a user being
+        likely to notice.
+    </details>
+  </td>
+</tr>
+<tr>
+  <th>[[#cap-open-for-browser-event]]</th>
+  <td data-goal="prob-transfer-userid-no-nav">
+    <span style="color:green">✘</span>
+  </td>
+</tr>
+<tr>
+  <th>[[#cap-visible-for-browser-event]]</th>
+  <td data-goal="prob-transfer-userid-no-nav">
+      <details>
+        <summary style="color:red">✓</summary>
+        Browser-wide events generally need to be visible immediately when a user
+        is looking at a website, so the tracker just needs to notice that the
+        event's parameters are the same, and its timestamp across two sites is
+        close together. The probability of identifying a single user goes up as
+        more events are observed.
+    </details>
+  </td>
+</tr>
+</table>
