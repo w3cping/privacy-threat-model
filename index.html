@@ -1221,9 +1221,9 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version b&apos;73bdd63e0be445a5c933c09bc98f42b355e552e4&apos;" name="generator">
+  <meta content="Bikeshed version 70ffa93, updated Fri May 1 10:12:04 2020 -0700" name="generator">
   <link href="https://w3cping.github.io/privacy-threat-model" rel="canonical">
-  <meta content="39d5b6db00cfee764af790b050aef7fae283c82f" name="document-revision">
+  <meta content="b10711763fa3f5846c145ccbedfef79ac5e7e43e" name="document-revision">
 <style>
 .threatmodel tr.goals th {
   padding: 1ex;
@@ -1430,7 +1430,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Target Privacy Threat Model</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-03-19">19 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-05-01">1 May 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1454,7 +1454,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
 		please contact the editors. </p>
     </details>
    </div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2019 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). <abbr title="World Wide Web Consortium">W3C</abbr> <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2020 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). <abbr title="World Wide Web Consortium">W3C</abbr> <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -1514,6 +1514,11 @@ dfn > a.self-link::before      { content: "#"; }</style>
       <li><a href="#cap-first-party-js"><span class="secno">5.2</span> <span class="content">Run Javascript in a first-party context</span></a>
       <li><a href="#cap-run-on-server"><span class="secno">5.3</span> <span class="content">Modify server processing</span></a>
       <li><a href="#cap-read-logs"><span class="secno">5.4</span> <span class="content">Read server logs</span></a>
+      <li><a href="#cap-type-identifier"><span class="secno">5.5</span> <span class="content">Convince the user to type an identifier</span></a>
+      <li><a href="#cap-same-device-same-time"><span class="secno">5.6</span> <span class="content">Convince the user to open the same device in two cross-site tabs</span></a>
+      <li><a href="#cap-same-rw-device"><span class="secno">5.7</span> <span class="content">Convince the user to open the same read+write device in two different sites</span></a>
+      <li><a href="#cap-open-for-browser-event"><span class="secno">5.8</span> <span class="content">Have two sites open when a browser-wide event happens</span></a>
+      <li><a href="#cap-visible-for-browser-event"><span class="secno">5.9</span> <span class="content">Have two sites visible when a browser-wide event happens</span></a>
      </ol>
     <li>
      <a href="#goals"><span class="secno">6</span> <span class="content">Attacker goals</span></a>
@@ -1780,7 +1785,6 @@ their goal.</p>
    <p class="issue" id="issue-eb037c92"><a class="self-link" href="#issue-eb037c92"></a> Should we mark goals attackers can currently achieve, which we want to
 remove, differently from goals attackers already can’t achieve?</p>
    <h3 class="heading settled" data-level="4.1" id="model-cross-site-recognition"><span class="secno">4.1. </span><span class="content">Cross-site recognition</span><a class="self-link" href="#model-cross-site-recognition"></a></h3>
-    TODO 
    <table class="threatmodel">
     <tbody>
      <tr class="goals">
@@ -1859,6 +1863,68 @@ remove, differently from goals attackers already can’t achieve?</p>
       <td data-goal="prob-transfer-userid-no-nav"> <span style="color:red">✓</span> 
       <td data-goal="prob-transfer-userid"> <span style="color:red">✓</span> 
    </table>
+   <p>Further cross-site recognition is available by combining capabilities with the
+ability to <a href="#cap-first-party-js">§ 5.2 Run Javascript in a first-party context</a> (or <a href="#cap-run-on-server">§ 5.3 Modify server processing</a> to add
+attacker-controlled javascript):</p>
+   <table class="threatmodel">
+    <tbody>
+     <tr class="goals">
+      <td>
+      <th><a href="#goal-prob-transfer-userid-no-nav">§ 6.2.5 Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a>
+     <tr>
+      <th><a href="#cap-type-identifier">§ 5.5 Convince the user to type an identifier</a>
+      <td data-goal="prob-transfer-userid-no-nav">
+       <details>
+        <summary style="color:red">✓</summary>
+         The tracker gets a report of the identifiers typed in both publisher
+        sites, along with each publisher’s <a data-link-type="dfn" href="#user-id" id="ref-for-user-id②">user id</a>. If they’re equal, the <a data-link-type="dfn" href="#user-id" id="ref-for-user-id③">user ids</a> probably refer to the same user. The probability depends on
+        the type of identifier: email addresses or credit card numbers are very
+        high probability. Names or dates of birth are lower probability unless
+        combined with other information like a zip code. 
+       </details>
+     <tr>
+      <th><a href="#cap-same-device-same-time">§ 5.6 Convince the user to open the same device in two cross-site tabs</a>
+      <td data-goal="prob-transfer-userid-no-nav">
+       <details>
+        <summary style="color:red">✓</summary>
+         The tracker reads the two devices, and if they give the same output at
+        approximately the same time, the user is probably the same. For devices
+        like cameras and microphones, detection is likely to be very accurate.
+        Others, like ambient light, might only give a few bits per sample, and
+        so need a long period of overlap in order to provide a good correlation. 
+        <p>For some devices, this transfer can be mitigated by turning off input
+        when the site isn’t visible or isn’t focused, but user expectations
+        limit where that mitigation is applicable.</p>
+       </details>
+     <tr>
+      <th><a href="#cap-same-rw-device">§ 5.7 Convince the user to open the same read+write device in two different sites</a>
+      <td data-goal="prob-transfer-userid-no-nav">
+       <details>
+        <summary style="color:red">✓</summary>
+         The tracker writes identifying content to the device and then reads it
+        back when the other site is opened. This is visible to varying degrees
+        depending on the device: an individual native file or a Bluetooth or USB
+        device that isn’t designed to cooperate with this sort of tracking, is
+        likely to break in obvious ways when the tracker tries to write an
+        identifier. A native directory, on the other hand, has many available
+        filenames that could hold identifying information without a user being
+        likely to notice. 
+       </details>
+     <tr>
+      <th><a href="#cap-open-for-browser-event">§ 5.8 Have two sites open when a browser-wide event happens</a>
+      <td data-goal="prob-transfer-userid-no-nav"> <span style="color:green">✘</span> 
+     <tr>
+      <th><a href="#cap-visible-for-browser-event">§ 5.9 Have two sites visible when a browser-wide event happens</a>
+      <td data-goal="prob-transfer-userid-no-nav">
+       <details>
+        <summary style="color:red">✓</summary>
+         Browser-wide events generally need to be visible immediately when a user
+        is looking at a website, so the tracker just needs to notice that the
+        event’s parameters are the same, and its timestamp across two sites is
+        close together. The probability of identifying a single user goes up as
+        more events are observed. 
+       </details>
+   </table>
    <h3 class="heading settled" data-level="4.2" id="model-sensitive-information"><span class="secno">4.2. </span><span class="content">Sensitive-information</span><a class="self-link" href="#model-sensitive-information"></a></h3>
    <p>Attackers should only be able to get access to sensitive information from a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent">user agent</a> if the user expresses their intent that the attacker get access
 to this information at the time the attacker gets access to it. User agents vary
@@ -1925,11 +1991,31 @@ publisher data that’s exposed to Javascript. This includes query parameters
 (e.g. <code>fbclid</code>) and any cookies that aren’t <a data-link-type="http-header" href="https://tools.ietf.org/html/rfc6265#section-4.1.2.6" id="ref-for-section-4.1.2.6">HttpOnly</a>.</p>
    <h3 class="heading settled" data-level="5.3" id="cap-run-on-server"><span class="secno">5.3. </span><span class="content">Modify server processing</span><a class="self-link" href="#cap-run-on-server"></a></h3>
    <p>Some attackers can convince some publishers (perhaps by paying them) to modify
-their server software. This could be used, for example, to receive <a data-link-type="dfn" href="#user-id" id="ref-for-user-id②">user IDs</a> passed in a path segment instead of a query parameter, without breaking the
+their server software. This could be used, for example, to receive <a data-link-type="dfn" href="#user-id" id="ref-for-user-id④">user IDs</a> passed in a path segment instead of a query parameter, without breaking the
 normal logic mapping a path to content.</p>
    <h3 class="heading settled" data-level="5.4" id="cap-read-logs"><span class="secno">5.4. </span><span class="content">Read server logs</span><a class="self-link" href="#cap-read-logs"></a></h3>
    <p>Servers can keep logs of requests. The attacker may be able to convince some
 server operators to give them these logs or let them run queries over the logs.</p>
+   <h3 class="heading settled" data-level="5.5" id="cap-type-identifier"><span class="secno">5.5. </span><span class="content">Convince the user to type an identifier</span><a class="self-link" href="#cap-type-identifier"></a></h3>
+   <p>The attacker can convince a user to type their email address, name, zip code,
+etc. into two publishers' sites.</p>
+   <h3 class="heading settled" data-level="5.6" id="cap-same-device-same-time"><span class="secno">5.6. </span><span class="content">Convince the user to open the same device in two cross-site tabs</span><a class="self-link" href="#cap-same-device-same-time"></a></h3>
+   <p>The attacker can convince a user to open the same device on two publishers'
+sites that are both open at the same time in different tabs or windows.</p>
+   <h3 class="heading settled" data-level="5.7" id="cap-same-rw-device"><span class="secno">5.7. </span><span class="content">Convince the user to open the same read+write device in two different sites</span><a class="self-link" href="#cap-same-rw-device"></a></h3>
+   <p>A read+write device is something like a native filesystem file or directory, or
+a bluetooth or USB device that can be configured to save data. The two sites
+need to be given access to the same device, but they don’t need to both be open
+at the same time.</p>
+   <h3 class="heading settled" data-level="5.8" id="cap-open-for-browser-event"><span class="secno">5.8. </span><span class="content">Have two sites open when a browser-wide event happens</span><a class="self-link" href="#cap-open-for-browser-event"></a></h3>
+   <p>A browser-wide event is something that happens to the browser as a whole instead
+of to an individual site or web page. For example, the user going idle, sensor
+data changing, or the device’s time zone changing, would affect all tabs at the
+same time.</p>
+   <h3 class="heading settled" data-level="5.9" id="cap-visible-for-browser-event"><span class="secno">5.9. </span><span class="content">Have two sites visible when a browser-wide event happens</span><a class="self-link" href="#cap-visible-for-browser-event"></a></h3>
+   <p>Unlike [#cap-open-for-browser-event], this capability requires both sites to be
+visible (probably in two separate browser windows) at the same time during the
+event.</p>
    <h2 class="heading settled" data-level="6" id="goals"><span class="secno">6. </span><span class="content">Attacker goals</span><a class="self-link" href="#goals"></a></h2>
    <p>These are things <a data-link-type="dfn" href="#attacker" id="ref-for-attacker">attackers</a> want to accomplish.</p>
    <h3 class="heading settled" data-level="6.1" id="goals-metrics"><span class="secno">6.1. </span><span class="content">User metrics within a single site</span><a class="self-link" href="#goals-metrics"></a></h3>
@@ -1943,20 +2029,20 @@ it occurred. A context is a set of resources that are controlled by the same
 party or jointly controlled by a set of parties. The following are building
 blocks that allow a tracker to build such a log of a user’s activity.</p>
    <h4 class="heading settled" data-level="6.2.1" id="goal-transfer-userid"><span class="secno">6.2.1. </span><span class="content">Transfer user ID from publisher 1 to publisher 2 on navigation.</span><a class="self-link" href="#goal-transfer-userid"></a></h4>
-   <p>When the user clicks a link from <a data-link-type="dfn" href="#publisher" id="ref-for-publisher">publisher</a> 1 that navigates to <a data-link-type="dfn" href="#publisher" id="ref-for-publisher①">publisher</a> 2, publisher 2’s server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id③">user ID</a> on publisher 2 and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id④">user ID</a> on
+   <p>When the user clicks a link from <a data-link-type="dfn" href="#publisher" id="ref-for-publisher">publisher</a> 1 that navigates to <a data-link-type="dfn" href="#publisher" id="ref-for-publisher①">publisher</a> 2, publisher 2’s server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑤">user ID</a> on publisher 2 and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑥">user ID</a> on
 publisher 1 represent the same <a data-link-type="dfn" href="#user" id="ref-for-user③">user</a>.</p>
    <h4 class="heading settled" data-level="6.2.2" id="goal-userid-tracker-to-self-in-pub"><span class="secno">6.2.2. </span><span class="content">Transfer user ID from tracker to that tracker running within a publisher, on navigation.</span><a class="self-link" href="#goal-userid-tracker-to-self-in-pub"></a></h4>
-   <p>When the user clicks a link from <code>tracker.example</code> to <code>publisher.example</code>, that <a data-link-type="dfn" href="#tracker" id="ref-for-tracker">tracker’s</a> server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑤">user ID</a> for either <code>publisher.example</code> or
-the tracker running within <code>publisher.example</code> and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑥">user ID</a> for <code>tracker.example</code> represent the same <a data-link-type="dfn" href="#user" id="ref-for-user④">user</a>.</p>
+   <p>When the user clicks a link from <code>tracker.example</code> to <code>publisher.example</code>, that <a data-link-type="dfn" href="#tracker" id="ref-for-tracker">tracker’s</a> server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑦">user ID</a> for either <code>publisher.example</code> or
+the tracker running within <code>publisher.example</code> and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑧">user ID</a> for <code>tracker.example</code> represent the same <a data-link-type="dfn" href="#user" id="ref-for-user④">user</a>.</p>
    <h4 class="heading settled" data-level="6.2.3" id="goal-userid-tracker-in-pub1-to-self-in-pub2"><span class="secno">6.2.3. </span><span class="content">Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</span><a class="self-link" href="#goal-userid-tracker-in-pub1-to-self-in-pub2"></a></h4>
    <p>When the user clicks a link from <code>publisher1.example</code> (where a tracker was
 embedded within that site) to <code>publisher2.example</code> (which has the same tracker
-embedded), that <a data-link-type="dfn" href="#tracker" id="ref-for-tracker①">tracker’s</a> server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑦">user ID</a> for either <code>publisher1.example</code> or the tracker running within <code>publisher1.example</code> and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑧">user ID</a> for either <code>publisher2.example</code> or the tracker running within <code>publisher2.example</code> represent the same <a data-link-type="dfn" href="#user" id="ref-for-user⑤">user</a>.</p>
+embedded), that <a data-link-type="dfn" href="#tracker" id="ref-for-tracker①">tracker’s</a> server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑨">user ID</a> for either <code>publisher1.example</code> or the tracker running within <code>publisher1.example</code> and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①⓪">user ID</a> for either <code>publisher2.example</code> or the tracker running within <code>publisher2.example</code> represent the same <a data-link-type="dfn" href="#user" id="ref-for-user⑤">user</a>.</p>
    <h4 class="heading settled" data-level="6.2.4" id="goal-prob-transfer-userid"><span class="secno">6.2.4. </span><span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</span><a class="self-link" href="#goal-prob-transfer-userid"></a></h4>
-   <p>When the user clicks a link from <a data-link-type="dfn" href="#publisher" id="ref-for-publisher②">publisher</a> 1 that navigates to <a data-link-type="dfn" href="#publisher" id="ref-for-publisher③">publisher</a> 2, publisher 2’s server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id⑨">user ID</a> on publisher 2 and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①⓪">user ID</a> on
+   <p>When the user clicks a link from <a data-link-type="dfn" href="#publisher" id="ref-for-publisher②">publisher</a> 1 that navigates to <a data-link-type="dfn" href="#publisher" id="ref-for-publisher③">publisher</a> 2, publisher 2’s server learns that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①①">user ID</a> on publisher 2 and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①②">user ID</a> on
 publisher 1 are more likely than chance to represent the same <a data-link-type="dfn" href="#user" id="ref-for-user⑥">user</a>.</p>
    <h4 class="heading settled" data-level="6.2.5" id="goal-prob-transfer-userid-no-nav"><span class="secno">6.2.5. </span><span class="content">Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</span><a class="self-link" href="#goal-prob-transfer-userid-no-nav"></a></h4>
-   <p>While the user is visiting <a data-link-type="dfn" href="#publisher" id="ref-for-publisher④">publisher</a> 1, that publisher can tell <a data-link-type="dfn" href="#publisher" id="ref-for-publisher⑤">publisher</a> 2 that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①①">user ID</a> on publisher 2 and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①②">user ID</a> on publisher
+   <p>While the user is visiting <a data-link-type="dfn" href="#publisher" id="ref-for-publisher④">publisher</a> 1, that publisher can tell <a data-link-type="dfn" href="#publisher" id="ref-for-publisher⑤">publisher</a> 2 that a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①③">user ID</a> on publisher 2 and a <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①④">user ID</a> on publisher
 1 are more likely than chance to represent the same <a data-link-type="dfn" href="#user" id="ref-for-user⑦">user</a>, without requiring
 the user to navigate from publisher 1 to publisher 2.</p>
    <h2 class="heading settled" data-level="7" id="essential"><span class="secno">7. </span><span class="content">Essential Web APIs</span><a class="self-link" href="#essential"></a></h2>
@@ -1981,7 +2067,7 @@ policy</a>, which inspired
 Safari’s policy.</p>
    <p>Michael Kleber on the Chrome team proposed a <a href="https://github.com/michaelkleber/privacy-model">Privacy Model for the
 Web</a>, which suggests blocking
-the transfer of <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①③">user IDs</a> between top-level sites and suggests a few ways
+the transfer of <a data-link-type="dfn" href="#user-id" id="ref-for-user-id①⑤">user IDs</a> between top-level sites and suggests a few ways
 that information could flow between sites without compromising user privacy.</p>
   </main>
   <div data-fill-with="conformance">
@@ -2278,7 +2364,7 @@ that information could flow between sites without compromising user privacy.</p>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-mediaqueries-5">[MEDIAQUERIES-5]
-   <dd>Dean Jackson; Florian Rivoal; Tab Atkins Jr.. <a href="https://www.w3.org/TR/mediaqueries-5/">Media Queries Level 5</a>. 3 March 2020. WD. URL: <a href="https://www.w3.org/TR/mediaqueries-5/">https://www.w3.org/TR/mediaqueries-5/</a>
+   <dd>Dean Jackson; Florian Rivoal; Tab Atkins Jr.. <a href="https://www.w3.org/TR/mediaqueries-5/">Media Queries Level 5</a>. 18 March 2020. WD. URL: <a href="https://www.w3.org/TR/mediaqueries-5/">https://www.w3.org/TR/mediaqueries-5/</a>
    <dt id="biblio-psl">[PSL]
    <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
    <dt id="biblio-rfc2119">[RFC2119]
@@ -2347,14 +2433,14 @@ browsers can mitigate. <a href="https://github.com/w3cping/privacy-threat-model/
    <b><a href="#user-id">#user-id</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-id">2. Terminology</a>
-    <li><a href="#ref-for-user-id①">4.1. Cross-site recognition</a>
-    <li><a href="#ref-for-user-id②">5.3. Modify server processing</a>
-    <li><a href="#ref-for-user-id③">6.2.1. Transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-user-id④">(2)</a>
-    <li><a href="#ref-for-user-id⑤">6.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a> <a href="#ref-for-user-id⑥">(2)</a>
-    <li><a href="#ref-for-user-id⑦">6.2.3. Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a> <a href="#ref-for-user-id⑧">(2)</a>
-    <li><a href="#ref-for-user-id⑨">6.2.4. Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-user-id①⓪">(2)</a>
-    <li><a href="#ref-for-user-id①①">6.2.5. Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a> <a href="#ref-for-user-id①②">(2)</a>
-    <li><a href="#ref-for-user-id①③">8. Acknowledgements</a>
+    <li><a href="#ref-for-user-id①">4.1. Cross-site recognition</a> <a href="#ref-for-user-id②">(2)</a> <a href="#ref-for-user-id③">(3)</a>
+    <li><a href="#ref-for-user-id④">5.3. Modify server processing</a>
+    <li><a href="#ref-for-user-id⑤">6.2.1. Transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-user-id⑥">(2)</a>
+    <li><a href="#ref-for-user-id⑦">6.2.2. Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a> <a href="#ref-for-user-id⑧">(2)</a>
+    <li><a href="#ref-for-user-id⑨">6.2.3. Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a> <a href="#ref-for-user-id①⓪">(2)</a>
+    <li><a href="#ref-for-user-id①①">6.2.4. Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a> <a href="#ref-for-user-id①②">(2)</a>
+    <li><a href="#ref-for-user-id①③">6.2.5. Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a> <a href="#ref-for-user-id①④">(2)</a>
+    <li><a href="#ref-for-user-id①⑤">8. Acknowledgements</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="global-identifier">
