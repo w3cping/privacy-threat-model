@@ -3,11 +3,11 @@
 <table class="threatmodel">
 <tr class="goals">
   <td></td>
-  <th>[[#goal-transfer-userid]]</th>
-  <th>[[#goal-userid-tracker-to-self-in-pub]]</th>
-  <th>[[#goal-userid-tracker-in-pub1-to-self-in-pub2]]</th>
-  <th>[[#goal-prob-transfer-userid-no-nav]]</th>
-  <th>[[#goal-prob-transfer-userid]]</th>
+  <th><div><div>[[#goal-transfer-userid]]</div></div></th>
+  <th><div><div>[[#goal-userid-tracker-to-self-in-pub]]</div></div></th>
+  <th><div><div>[[#goal-userid-tracker-in-pub1-to-self-in-pub2]]</div></div></th>
+  <th><div><div>[[#goal-prob-transfer-userid-no-nav]]</div></div></th>
+  <th><div><div>[[#goal-prob-transfer-userid]]</div></div></th>
 </tr>
 <tr>
   <th>[[#cap-iframes]]</th>
@@ -111,7 +111,7 @@ attacker-controlled javascript):
 <table class="threatmodel">
 <tr class="goals">
   <td></td>
-  <th>[[#goal-prob-transfer-userid-no-nav]]</th>
+  <th><div><div>[[#goal-prob-transfer-userid-no-nav]]</div></div></th>
 </tr>
 <tr>
   <th>[[#cap-type-identifier]]</th>

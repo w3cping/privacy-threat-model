@@ -42,15 +42,41 @@ spec: PSL; urlPrefix: https://publicsuffix.org/
 <pre class='link-defaults'>
 </pre>
 <style>
-.threatmodel tr.goals th {
-  padding: 1ex;
-  max-height: 20em;
+@supports(transform: rotate(45deg)) {
+/* Rotate threat model table headers to fit more columns on the screen.
+ * Details adapted from
+ * https://wabain.github.io/2019/10/13/css-rotated-table-header.html */
+  .threatmodel tr.goals th {
+    /* sin(45deg) == 0.707 */
+    height: calc((25em + 3em) * 0.707);
+    vertical-align: bottom;
+    text-align: right;
+    line-height: 1;
+  }
+  .threatmodel tr.goals th > div {
+    width: 5em;
+  }
+  .threatmodel tr.goals th > div > div {
+    width: 25em;
+    transform-origin: bottom left;
+    /* Read the transform steps bottom-up. */
+    transform:
+      /* Move the bottom corner from the left edge of the column to the center. */
+      translateX(calc(5em/2))
+      /* Rotate 45 degrees clockwise. */
+      rotate(45deg)
+      /* Move the bottom-right corner to the left edge of the column, which is
+       * the transform-origin. */
+      translateX(-100%);
+  }
+  .threatmodel tr.goals th a[href] {
+    border-bottom: 0;
+  }
 }
-.threatmodel tr.goals th * {
-  writing-mode: vertical-rl;
-}
+
 .threatmodel td {
   text-align: center;
+  min-width: 2em;
 }
 details[open] {
   position: absolute;
