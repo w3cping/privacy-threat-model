@@ -54,6 +54,6 @@ same time.
 
 ## Have two sites visible when a browser-wide event happens ## {#cap-visible-for-browser-event}
 
-Unlike [#cap-open-for-browser-event], this capability requires both sites to be
+Unlike [[#cap-open-for-browser-event]], this capability requires both sites to be
 visible (probably in two separate browser windows) at the same time during the
 event.
