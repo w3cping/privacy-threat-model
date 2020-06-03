@@ -17,37 +17,25 @@ it occurred. A context is a set of resources that are controlled by the same
 party or jointly controlled by a set of parties. The following are building
 blocks that allow a tracker to build such a log of a user's activity.
 
-### Transfer user ID from publisher 1 to publisher 2 on navigation. ### {#goal-transfer-userid}
+### Transfer user ID from publisher 1 to publisher 2. ### {#goal-transfer-userid}
 
-When the user clicks a link from [=publisher=] 1 that navigates to [=publisher=]
-2, publisher 2's server learns that a [=user ID=] on publisher 2 and a [=user ID=] on
-publisher 1 represent the same [=user=].
+[=Publisher=] 2's server learns that a [=user ID=] on [=publisher=] 2 and a [=user ID=]
+on [=publisher=] 1 represent the same [=user=].
 
-### Transfer user ID from tracker to that tracker running within a publisher, on navigation. ### {#goal-userid-tracker-to-self-in-pub}
+### Transfer user ID from tracker to that tracker running within a publisher. ### {#goal-userid-tracker-to-self-in-pub}
 
-When the user clicks a link from `tracker.example` to `publisher.example`, that
-[=tracker's=] server learns that a [=user ID=] for either `publisher.example` or
-the tracker running within `publisher.example` and a [=user ID=] for
-`tracker.example` represent the same [=user=].
+<code>[=tracker=].example</code>'s server learns that a [=user ID=] for either
+`publisher.example` or the tracker running within `publisher.example` and a
+[=user ID=] for `tracker.example` represent the same [=user=].
 
-### Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation. ### {#goal-userid-tracker-in-pub1-to-self-in-pub2}
+### Transfer user ID from tracker within publisher 1 to that tracker within publisher 2. ### {#goal-userid-tracker-in-pub1-to-self-in-pub2}
 
-When the user clicks a link from `publisher1.example` (where a tracker was
-embedded within that site) to `publisher2.example` (which has the same tracker
-embedded), that [=tracker's=] server learns that a [=user ID=] for either
+A [=tracker's=] server learns that a [=user ID=] for either
 `publisher1.example` or the tracker running within `publisher1.example` and a
 [=user ID=] for either `publisher2.example` or the tracker running within
 `publisher2.example` represent the same [=user=].
 
-### Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation. ### {#goal-prob-transfer-userid}
+### Probabilistically transfer user ID from publisher 1 to publisher 2. ### {#goal-prob-transfer-userid}
 
-When the user clicks a link from [=publisher=] 1 that navigates to [=publisher=]
-2, publisher 2's server learns that a [=user ID=] on publisher 2 and a [=user ID=] on
-publisher 1 are more likely than chance to represent the same [=user=].
-
-### Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation. ### {#goal-prob-transfer-userid-no-nav}
-
-While the user is visiting [=publisher=] 1, that publisher can tell
-[=publisher=] 2 that a [=user ID=] on publisher 2 and a [=user ID=] on publisher
-1 are more likely than chance to represent the same [=user=], without requiring
-the user to navigate from publisher 1 to publisher 2.
+[=Publisher=] 2's server learns that a [=user ID=] on [=publisher=] 2 and a [=user ID=] on
+[=publisher=] 1 are more likely than chance to represent the same [=user=].

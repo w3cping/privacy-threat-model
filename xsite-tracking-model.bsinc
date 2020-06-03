@@ -1,36 +1,43 @@
 ## Cross-site recognition ## {#model-cross-site-recognition}
 
 <table class="threatmodel">
+<thead>
 <tr class="goals">
-  <td></td>
+  <td colspan="2"></td>
   <th><div><div>[[#goal-transfer-userid]]</div></div></th>
   <th><div><div>[[#goal-userid-tracker-to-self-in-pub]]</div></div></th>
   <th><div><div>[[#goal-userid-tracker-in-pub1-to-self-in-pub2]]</div></div></th>
-  <th><div><div>[[#goal-prob-transfer-userid-no-nav]]</div></div></th>
   <th><div><div>[[#goal-prob-transfer-userid]]</div></div></th>
 </tr>
+<tbody>
 <tr>
-  <th>[[#cap-iframes]]</th>
+  <th colspan="2">[[#cap-iframes]] on both sides of a [[#cap-navigate|navigation]]</th>
   <td data-goal="transfer-userid" style="color:green">✘</td>
   <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘</td>
   <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘</td>
-  <td data-goal="prob-transfer-userid-no-nav" style="color:green">✘</td>
   <td data-goal="prob-transfer-userid" style="color:green">✘</td>
 </tr>
 <tr>
-  <th>[[#cap-first-party-js]]</th>
+  <th colspan="2">[[#cap-first-party-js]] on both sides of a [[#cap-navigate|navigation]]</th>
   <td data-goal="transfer-userid" style="color:green">✘</td>
   <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘</td>
   <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘</td>
-  <td data-goal="prob-transfer-userid-no-nav" style="color:green">✘</td>
+  <td data-goal="prob-transfer-userid" style="color:green">✘</td>
+</tr>
+<tbody>
+<tr>
+  <th colspan="2" scope="rowgroup">[[#cap-read-logs]] on other publishers</th>
+  <td data-goal="transfer-userid" style="color:green">✘</td>
+  <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘</td>
+  <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘</td>
   <td data-goal="prob-transfer-userid" style="color:green">✘</td>
 </tr>
 <tr>
-  <th>[[#cap-read-logs]] on other publishers</th>
+  <td></td>
+  <th>if publisher 1 can [[#cap-navigate]]</th>
   <td data-goal="transfer-userid" style="color:green">✘</td>
   <td data-goal="userid-tracker-to-self-in-pub" style="color:green">✘</td>
   <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" style="color:green">✘</td>
-  <td data-goal="prob-transfer-userid-no-nav" style="color:green">✘</td>
   <td data-goal="prob-transfer-userid">
   <details>
     <summary style="color:red">✓</summary>
@@ -40,8 +47,9 @@
   </details>
   </td>
 </tr>
+<tbody>
 <tr>
-  <th>[[#cap-run-on-server]] on the target publisher</th>
+  <th colspan="2">[[#cap-run-on-server]] on the post-[[#cap-navigate|navigation]] publisher</th>
   <td data-goal="transfer-userid">
     <span style="color:green">✘</span>
   </td>
@@ -60,15 +68,12 @@
   <td data-goal="userid-tracker-in-pub1-to-self-in-pub2" >
     <span style="color:green">✘</span>
   </td>
-  <td data-goal="prob-transfer-userid-no-nav" >
-    <span style="color:green">✘</span>
-  </td>
   <td data-goal="prob-transfer-userid">
     <span style="color:green">✘</span>
   </td>
 </tr>
 <tr>
-  <th>[[#cap-first-party-js]] or [[#cap-run-on-server]] on the source site and [[#cap-run-on-server]] on the target publisher</th>
+  <th colspan="2">[[#cap-first-party-js]] or [[#cap-run-on-server]] on the source site and [[#cap-run-on-server]] on the target publisher</th>
   <td data-goal="transfer-userid">
     <span style="color:green">✘</span>
   </td>
@@ -96,13 +101,11 @@
       tracker's server</a>.
     </details>
   </td>
-  <td data-goal="prob-transfer-userid-no-nav" >
-    <span style="color:red">✓</span>
-  </td>
   <td data-goal="prob-transfer-userid">
     <span style="color:red">✓</span>
   </td>
-</tr></table>
+</tr>
+</table>
 
 Further cross-site recognition is available by combining capabilities with the
 ability to [[#cap-first-party-js]] (or [[#cap-run-on-server]] to add
@@ -111,11 +114,11 @@ attacker-controlled javascript):
 <table class="threatmodel">
 <tr class="goals">
   <td></td>
-  <th><div><div>[[#goal-prob-transfer-userid-no-nav]]</div></div></th>
+  <th><div><div>[[#goal-prob-transfer-userid]]</div></div></th>
 </tr>
 <tr>
   <th>[[#cap-type-identifier]]</th>
-  <td data-goal="prob-transfer-userid-no-nav">
+  <td data-goal="prob-transfer-userid">
       <details>
         <summary style="color:red">✓</summary>
         The tracker gets a report of the identifiers typed in both publisher
@@ -129,7 +132,7 @@ attacker-controlled javascript):
 </tr>
 <tr>
   <th>[[#cap-same-device-same-time]]</th>
-  <td data-goal="prob-transfer-userid-no-nav">
+  <td data-goal="prob-transfer-userid">
       <details>
         <summary style="color:red">✓</summary>
         The tracker reads the two devices, and if they give the same output at
@@ -146,7 +149,7 @@ attacker-controlled javascript):
 </tr>
 <tr>
   <th>[[#cap-same-rw-device]]</th>
-  <td data-goal="prob-transfer-userid-no-nav">
+  <td data-goal="prob-transfer-userid">
       <details>
         <summary style="color:red">✓</summary>
         The tracker writes identifying content to the device and then reads it
@@ -162,13 +165,13 @@ attacker-controlled javascript):
 </tr>
 <tr>
   <th>[[#cap-open-for-browser-event]]</th>
-  <td data-goal="prob-transfer-userid-no-nav">
+  <td data-goal="prob-transfer-userid">
     <span style="color:green">✘</span>
   </td>
 </tr>
 <tr>
   <th>[[#cap-visible-for-browser-event]]</th>
-  <td data-goal="prob-transfer-userid-no-nav">
+  <td data-goal="prob-transfer-userid">
       <details>
         <summary style="color:red">✓</summary>
         Browser-wide events generally need to be visible immediately when a user
