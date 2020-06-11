@@ -69,7 +69,7 @@ the target threat model.
 
 As a **threat model**, this specification describes attacker capabilities and
 attacker goals, and says, for each possible set of capabilities an attacker
-might have, which goals they should or should not be able to achieve.
+might have, which goals we expect the attacker can achieve.
 
 As a **privacy** threat model, the attacker goals compromise the privacy of
 users, rather than their security.
