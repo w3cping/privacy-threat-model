@@ -289,7 +289,7 @@ For example:
 * Financial data.
 * Contacts.
 * Calendar entries.
-* Whether the user is using assistive technology.
+* [Whether the user is using assistive technology.](https://w3ctag.github.io/design-principles/#do-not-expose-use-of-assistive-tech)
 * ...
 
 A particular piece of information may have different sensitivity for different
