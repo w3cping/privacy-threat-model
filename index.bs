@@ -259,9 +259,9 @@ user.
 The attributes can be exposed as information about the user's device that is
 otherwise benign (as opposed to [[#hl-sensitive-information]]). For example:
 
-* What hardware is connected to the user's device? A game controller? An
-    assistive device?
-* What system preferences has the user set? Dark mode, etc...
+* What are the user's language and time zone?
+* What size is the user's window?
+* What system preferences has the user set? Dark mode, serif font, etc...
 * ...
 
 See [[fingerprinting-guidance]] for how to mitigate this threat.
@@ -289,6 +289,7 @@ For example:
 * Financial data.
 * Contacts.
 * Calendar entries.
+* [Whether the user is using assistive technology.](https://w3ctag.github.io/design-principles/#do-not-expose-use-of-assistive-tech)
 * ...
 
 A particular piece of information may have different sensitivity for different
