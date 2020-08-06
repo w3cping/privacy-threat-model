@@ -4,6 +4,12 @@ These are things some attackers can do. The attackers can use them to achieve
 their <a href="#goals">goals</a>. All attackers are assumed to be able to buy
 domains and host sites on their domains.
 
+## Show the user a navigation ## {#cap-navigate}
+
+Users can notice a site navigating, and it disrupts the top-level site's state,
+so not all attackers will be willing to create an extra navigation in order to
+transfer a user ID.
+
 ## Load iframes ## {#cap-iframes}
 
 The attacker can convince a publisher to load an iframe from the attacker's site.
