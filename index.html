@@ -1221,19 +1221,45 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 792aee4, updated Fri Jun 5 17:22:42 2020 -0700" name="generator">
+  <meta content="Bikeshed version c9be1fd, updated Wed Aug 5 08:19:23 2020 +0200" name="generator">
   <link href="https://w3cping.github.io/privacy-threat-model" rel="canonical">
-  <meta content="69e2b430b75de14edbf73759d7f0580da98de906" name="document-revision">
+  <meta content="ded6a510f434129e66c4c8974f384e38e6fa1a78" name="document-revision">
 <style>
-.threatmodel tr.goals th {
-  padding: 1ex;
-  max-height: 20em;
+@supports(transform: rotate(45deg)) {
+/* Rotate threat model table headers to fit more columns on the screen.
+ * Details adapted from
+ * https://wabain.github.io/2019/10/13/css-rotated-table-header.html */
+  .threatmodel tr.goals th {
+    /* sin(45deg) == 0.707 */
+    height: calc((25em + 3em) * 0.707);
+    vertical-align: bottom;
+    text-align: right;
+    line-height: 1;
+  }
+  .threatmodel tr.goals th > div {
+    width: 5em;
+  }
+  .threatmodel tr.goals th > div > div {
+    width: 25em;
+    transform-origin: bottom left;
+    /* Read the transform steps bottom-up. */
+    transform:
+      /* Move the bottom corner from the left edge of the column to the center. */
+      translateX(calc(5em/2))
+      /* Rotate 45 degrees clockwise. */
+      rotate(45deg)
+      /* Move the bottom-right corner to the left edge of the column, which is
+       * the transform-origin. */
+      translateX(-100%);
+  }
+  .threatmodel tr.goals th a[href] {
+    border-bottom: 0;
+  }
 }
-.threatmodel tr.goals th * {
-  writing-mode: vertical-rl;
-}
+
 .threatmodel td {
   text-align: center;
+  min-width: 2em;
 }
 details[open] {
   position: absolute;
@@ -1430,7 +1456,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Target Privacy Threat Model</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-06-11">11 June 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-08-06">6 August 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1789,11 +1815,26 @@ remove, differently from goals attackers already can’t achieve?</p>
     <tbody>
      <tr class="goals">
       <td>
-      <th><a href="#goal-transfer-userid">§ 6.2.1 Transfer user ID from publisher 1 to publisher 2 on navigation.</a>
-      <th><a href="#goal-userid-tracker-to-self-in-pub">§ 6.2.2 Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a>
-      <th><a href="#goal-userid-tracker-in-pub1-to-self-in-pub2">§ 6.2.3 Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a>
-      <th><a href="#goal-prob-transfer-userid-no-nav">§ 6.2.5 Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a>
-      <th><a href="#goal-prob-transfer-userid">§ 6.2.4 Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a>
+      <th>
+       <div>
+        <div><a href="#goal-transfer-userid">§ 6.2.1 Transfer user ID from publisher 1 to publisher 2 on navigation.</a></div>
+       </div>
+      <th>
+       <div>
+        <div><a href="#goal-userid-tracker-to-self-in-pub">§ 6.2.2 Transfer user ID from tracker to that tracker running within a publisher, on navigation.</a></div>
+       </div>
+      <th>
+       <div>
+        <div><a href="#goal-userid-tracker-in-pub1-to-self-in-pub2">§ 6.2.3 Transfer user ID from tracker within publisher 1 to that tracker within publisher 2, on navigation.</a></div>
+       </div>
+      <th>
+       <div>
+        <div><a href="#goal-prob-transfer-userid-no-nav">§ 6.2.5 Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a></div>
+       </div>
+      <th>
+       <div>
+        <div><a href="#goal-prob-transfer-userid">§ 6.2.4 Probabilistically transfer user ID from publisher 1 to publisher 2 on navigation.</a></div>
+       </div>
      <tr>
       <th><a href="#cap-iframes">§ 5.1 Load iframes</a>
       <td data-goal="transfer-userid" style="color:green">✘
@@ -1870,7 +1911,10 @@ attacker-controlled javascript):</p>
     <tbody>
      <tr class="goals">
       <td>
-      <th><a href="#goal-prob-transfer-userid-no-nav">§ 6.2.5 Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a>
+      <th>
+       <div>
+        <div><a href="#goal-prob-transfer-userid-no-nav">§ 6.2.5 Probabilistically transfer user ID from publisher 1 to publisher 2 without navigation.</a></div>
+       </div>
      <tr>
       <th><a href="#cap-type-identifier">§ 5.5 Convince the user to type an identifier</a>
       <td data-goal="prob-transfer-userid-no-nav">
@@ -2364,7 +2408,7 @@ that information could flow between sites without compromising user privacy.</p>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-mediaqueries-5">[MEDIAQUERIES-5]
-   <dd>Dean Jackson; Florian Rivoal; Tab Atkins Jr.. <a href="https://www.w3.org/TR/mediaqueries-5/">Media Queries Level 5</a>. 3 June 2020. WD. URL: <a href="https://www.w3.org/TR/mediaqueries-5/">https://www.w3.org/TR/mediaqueries-5/</a>
+   <dd>Dean Jackson; Florian Rivoal; Tab Atkins Jr.. <a href="https://www.w3.org/TR/mediaqueries-5/">Media Queries Level 5</a>. 31 July 2020. WD. URL: <a href="https://www.w3.org/TR/mediaqueries-5/">https://www.w3.org/TR/mediaqueries-5/</a>
    <dt id="biblio-psl">[PSL]
    <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
    <dt id="biblio-rfc2119">[RFC2119]
