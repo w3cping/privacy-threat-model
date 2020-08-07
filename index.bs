@@ -85,6 +85,75 @@ details[open] {
   text-align: left;
 }
 </style>
+<script type="module">
+  /** Takes a threat model table header, which should be written in Bikeshed
+   * like
+   *
+   * <th><div><div>[[#goal-transfer-userid]]</div></div></th>
+   *
+   * and extracts the "transfer-userid" part from the generated <a> tag.
+   */
+  function findGoalFromColumnHeader(header) {
+    const firstDiv = header.firstElementChild;
+    const secondDiv = firstDiv?.firstElementChild;
+    const link = secondDiv?.firstElementChild;
+    if (header.colSpan != 1 ||
+        link == null ||
+        firstDiv.tagName !== "DIV" ||
+        secondDiv.tagName !== "DIV" ||
+        link.tagName !== "A" ||
+        link.href === "") {
+      console.error("Expected header cell to be written like <th><div><div><a href=...>...\n",
+                    header);
+      return "error";
+    }
+    const target = new URL(link.href);
+    if (!target.hash.startsWith("#goal-")) {
+      console.error("Column header expected to have a fragment starting with '#goal-': ",
+                    link);
+    }
+    return target.hash.slice(6);
+  }
+
+  for (const table of document.getElementsByClassName("threatmodel")) {
+    // Make sure that the checks and Xes in the source are meant to apply to the
+    // attacker goal described by the heading they appear under.
+    const goalOrder = [];
+    let goalsStarted = false;
+    for (const header of table.rows[0].cells) {
+      if (header.textContent.trim() === "" && !goalsStarted) {
+        for (const _ of Array(header.colSpan)) {
+          goalOrder.push(undefined);
+        }
+        continue;
+      }
+      goalsStarted = true;
+      goalOrder.push(findGoalFromColumnHeader(header));
+    }
+
+    // Check the body rows.
+    for (const row of Array.prototype.slice.call(table.rows, 1)) {
+      let column = 0;
+      for (const cell of row.cells) {
+        let expectedGoal = goalOrder[column];
+        column += cell.colSpan;
+        if (expectedGoal === undefined && "goal" in cell.dataset) {
+          console.error("Cell without visible header has a data-goal attribute.\n",
+                        cell);
+        } else if (expectedGoal === "error") {
+          // Don't be spammy if the header's broken.
+          continue;
+        } else if (cell.dataset.goal !== expectedGoal) {
+          console.error("Cell expected to have goal '" + expectedGoal +
+                        "' but actually claims '" + cell.dataset.goal + "'.\n",
+                        cell);
+        } else {
+          // The cell is in the right column.
+        }
+      }
+    }
+  }
+</script>
 
 Advisement: This document is at a very early stage. Many things in it are wrong
 and/or incomplete. Please take it as a rough shape for how we might document the
