@@ -275,6 +275,22 @@ This occurs if a site can determine with high probability that a visit to that
 site comes from the same user as another visit to a *different* site.  This
 threat is discussed in [[#model-cross-site-recognition]].
 
+## Profile building ## {#hl-profile-building}
+
+This is a kind of [=surveillance=] and [=correlation=], which can lead to
+[=disclosure=].
+
+Even within a single site, information about what links a user clicked, or where
+on the page they were looking, can reveal interesting things about that user. At
+the same time, when aggregated, this information can be used to improve websites
+and to help them get paid for the ads users see.
+
+Across sites, each site might want to know how users behave on other sites even
+if they can't get a full user ID from the other site as desired by
+[[#hl-recognition-cross-site]]. For example, a shopping site knowing that a user
+did or did not buy a product on a particular other shopping site could help the
+first target their promotions better.
+
 ## Sensitive information disclosure ## {#hl-sensitive-information}
 
 Contributes to [=correlation=], [=identification=], [=secondary use=], and
