@@ -15,16 +15,24 @@ All forms of individual tracking should be prevented entirely and made impossibl
 
 All forms of profiling should be prevented.
 
-Benefits:
+**Benefits:**
+
 100% guarantee a user cannot be tracked.
 
-Issues:
+**Issues:**
+
 Potentially not feasible to lock out every tracking method, esp tracking by the browser or OS.
+
 Potentially not feasible to lock out every profiling method, esp ‘form profiling’. 
+
 Concerns above infeasibilities could lead to profiling monopolization by companies whose tracking methods cannot be locked out, leading to a worse privacy state and less web competition.
+
 Breaks current technologies.
+
 Concerns users will not have transparency/control over their data when they are tracked under the assumption it should not exist.
+
 Leads to subscription and walled garden web solutions.
+
 Preventing fingerprinting requires entropy management that restricts abilities of the internet.
 
 
@@ -32,22 +40,36 @@ Preventing fingerprinting requires entropy management that restricts abilities o
 This theory is the idea that a user should have total control over their online data, and profiling may exist while this is the case.
 
 A user’s profile must be linked to an id stored on device that can be passed in place of Personal Information.
+
 Personal Information is restricted or forbidden to be passed/sold.
+
 The id can be removed from the device by the user to thwart all existing profiles.
+
 Every tracking method and profiling method should be auditable.
+
 A user should have the ability to be forgotten, or a user’s ability to delete their profile.
+
 A user should have the ability to opt (in or out whichever is deemed more appropriate) to tracking
+
 Legal arrangements used to punish detractors
 
-Benefits:
+**Benefits:**
+
 Does not break current technologies
+
 Keeps open web, prevents walled garden dominance
+
 Custom experiences can still exist
 
-Issues:
+
+**Issues:**
+
 Reliance on audits to detect cheaters may be impractical
+
 Data Sales and Sharing may obscure what data is where
+
 When PI serves a legal business need (your name must be recorded in an ecommerce transaction) some data cannot be deleted
+
 When PI is associated, revoking the id may not thwart existing profiles for a cheating operator or under some implementations
 
 
