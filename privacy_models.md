@@ -86,7 +86,7 @@ Tracking methods with no tags are implementable by all parties.
 Tracking methods only implementable by user agent cooperation are marked with a (B), for browser
 Tracking methods only implementable by operating system cooperation are marked with an (OS), for operating system
 
-**Sync Tracking**: Any type of cross device syncing involving browser data. Examples include Chrome Sync. This allows for cross domain data to be tracked by the browser company. This also allows for user profile data and customization to be built from this data.
+**Sync Tracking** (B): Any type of cross device syncing involving browser data. Examples include Chrome Sync. This allows for cross domain data to be tracked by the browser company. This also allows for user profile data and customization to be built from this data.
 
 **OS Snooping** (B) (OS): Examples: Safari-ios or Google-Android integrations that enable the operating system to gain insight into user data in the browser when it appears as an app, or in some cases even in the classic PC browser. These browser-side integrations allow tracking prevention safeguards to be bypassed by the browser and/or OS companies. This allows a user’s web data to be tracked and users to be profiled on the web through the user agent through a back door.
 
